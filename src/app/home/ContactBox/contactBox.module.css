@@ -1,0 +1,109 @@
+.contactBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.left {
+  height: 380px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.left .imgBox {
+  position: relative;
+}
+
+.left .imgBox img {
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+.left .imgSet {
+  display: grid;
+  gap: 1rem;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2vh;
+}
+
+.right article {
+  max-width: 200px;
+  gap: 0.5vh;
+  display: grid;
+}
+
+.right div {
+  display: flex;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.right strong {
+  font-size: 1.1rem;
+}
+
+.right legend {
+  background: white;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.right button {
+  background: var(--theme);
+  color: white;
+  padding: 8px;
+
+}
+
+.right p {
+  display: flex;
+  flex-direction: column;
+}
+
+.right hr {
+  width: 300px;
+  border-top: 2px solid gray;
+}
+
+.right small {
+  color: gray;
+}
+
+@media all and (max-width:1250px) {
+  .right article {
+    max-width: revert;
+  }
+}
+
+@media all and (max-width:1100px) {
+  .contactBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* grid-template-columns: 1fr; */
+  }
+
+  .left {
+    height: 300px;
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .left .imgSet {
+    display: none;
+  }
+
+  .right {
+    align-items: center;
+    text-align: center;
+  }
+}

@@ -1,0 +1,115 @@
+.gallery {
+  height: 430px;
+  display: grid;
+  grid-template-columns: 0.45fr 0.6fr 0.8fr;
+  gap: 1rem;
+}
+
+.left,
+.right {
+  display: grid;
+  gap: 1rem;
+}
+
+.mid {
+  display: grid;
+}
+
+.snaps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.snap {
+  background: red;
+  border-radius: 15px;
+  position: relative;
+  display: grid;
+  cursor: pointer;
+}
+
+.snap img {
+  border-radius: 15px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.snap .sheet {
+  position: relative;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.306);
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: white;
+}
+
+.snap .sheet legend {
+  background: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  color: var(--theme);
+  color: orange;
+  padding: 3px 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  border-radius: 40px;
+}
+
+.snap .sheet p {
+  display: flex;
+  flex-direction: column;
+}
+
+.snap .sheet p small {
+  color: lightgray;
+  font-size: 0.7rem;
+}
+
+
+@media all and (max-width:1100px) {
+  .gallery {
+    height: revert;
+  }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .snap {
+    width: 200px;
+    height: 250px;
+  }
+
+  .snaps,
+  .left,
+  .right,
+  .mid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media all and (max-width:500px) {
+  .snap {
+    width: revert;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .snaps,
+  .left,
+  .right,
+  .mid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

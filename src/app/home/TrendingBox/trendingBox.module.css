@@ -1,0 +1,116 @@
+.trendingBox {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  overflow: hidden;
+}
+
+.slideBox {
+  width: 85%;
+  padding-right: 15% !important;
+  padding-bottom: 10px !important;
+}
+
+
+.slide:nth-child(1) {
+  margin-left: 12%;
+}
+
+
+.trend {
+  display: grid;
+  gap: 1.3rem;
+  padding: 10px;
+  border-radius: 15px;
+  color: black;
+  border: 1px solid var(--theme);
+}
+
+.imgBox {
+  height: 240px;
+  position: relative;
+}
+
+.imgBox img {
+  border-radius: 10px;
+}
+
+
+.top,
+.mid,
+.low {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top p,
+.mid p,
+.low p {
+  display: flex;
+  flex-direction: column;
+}
+
+.top strong {
+  font-size: 1.1rem;
+}
+
+.top small,
+.mid small,
+.low small {
+  color: gray;
+}
+
+.top svg {
+  font-size: 2rem;
+}
+
+.mid svg {
+  color: var(--score);
+}
+
+.low legend {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.low a svg {
+  font-size: 2rem;
+  transition: 0.4s ease;
+  color: var(--theme);
+}
+
+.low a:hover svg {
+  rotate: 90deg;
+}
+
+@media all and (max-width:1300px) {
+  .slideBox {
+    margin-left: 5% !important;
+  }
+
+  .slide:nth-child(1) {
+    margin-left: revert;
+  }
+}
+
+@media all and (max-width:800px) {
+  .slideBox {
+    width: 95%;
+    margin-left: 2.5% !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media all and (max-width:500px) {
+  .trendingBox {
+    gap: 1vh;
+  }
+
+  .slideBox {
+    width: 95%;
+    margin: auto !important;
+    padding: 0 !important;
+  }
+}
