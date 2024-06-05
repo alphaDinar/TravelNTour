@@ -1,7 +1,7 @@
 import axios from 'axios';
 export const createPayLink = async (amount: number, tid: string, email: string) => {
   // const host = 'http://localhost:3000';
-  const host = 'http://localhost:3000';
+  const host = 'https://travel-n-tour.vercel.app';
   const url = "https://api.paystack.co/transaction/initialize";
 
   const data = {
