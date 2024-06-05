@@ -1,0 +1,12 @@
+.pageHeader h3 {
+  font-size: 1.5rem;
+  border-bottom: 4px solid var(--theme);
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pageHeader h3 svg {
+  cursor: pointer;
+}

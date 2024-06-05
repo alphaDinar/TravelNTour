@@ -1,0 +1,253 @@
+.panel {
+  /* background: var(--bg); */
+  background: whitesmoke;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row !important;
+  justify-content: flex-end;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 17%;
+  height: 95vh;
+  padding: 2.5vh 1.5%;
+  background: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+  overflow-y: auto;
+  transition: 0.4s ease;
+  z-index: 10;
+}
+
+.sidebarSheet {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.358);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  display: none;
+}
+
+.sidebarSheet.change {
+  left: -100%;
+}
+
+.sidebar::-webkit-scrollbar,
+.screen::-webkit-scrollbar {
+  background: transparent;
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.screen::-webkit-scrollbar-thumb {
+  width: 6px;
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+.sidebar header {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 6vh;
+}
+
+.sidebar nav h3 {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.sidebar nav section {
+  display: grid;
+  gap: 2vh;
+}
+
+.sidebar nav section article {
+  display: grid;
+  gap: 1vh;
+}
+
+
+.sidebar nav a {
+  padding: 14px 14px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--sidebarText);
+  position: relative;
+  cursor: pointer;
+}
+
+.sidebar nav a:hover {
+  background: var(--blueFeint);
+  color: var(--primary);
+}
+
+.sidebar nav a.change {
+  background: var(--primary);
+  color: white;
+}
+
+.sidebar nav a svg {
+  font-size: 1.2rem;
+}
+
+.sidebar nav a .dropDown {
+  position: absolute;
+  right: 20px;
+  font-size: 2rem;
+}
+
+
+
+.sidebar.change {
+  width: 3%;
+}
+
+.sidebar.change header,
+.sidebar.change a span,
+.sidebar.change nav a .dropDown {
+  display: none;
+}
+
+.sidebar nav a .dot {
+  font-size: 0.9rem;
+}
+
+.hiddenLinks {
+  border: 1px solid black;
+  display: none;
+}
+
+.hiddenLinks a,
+.visibleLinks a {
+  font-size: 0.9rem;
+}
+
+.visibleLinks {
+  display: grid;
+}
+
+
+.screen {
+  width: 75%;
+  padding: 2.5vh 2.5%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  position: relative;
+  transition: 0.4s ease;
+}
+
+.screen.change {
+  width: 86%;
+  padding: 2.5vh 4%;
+}
+
+.topNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topNav svg {
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.topNav article {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topNav article legend {
+  display: flex;
+  gap: 0.2rem;
+  align-items: flex-end;
+}
+
+.userBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--blueFeint);
+  padding: 5px;
+  border-radius: 5px;
+  color: var(--primary);
+}
+
+.userBox sub {
+  display: block;
+  background: black;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.userBox hr {
+  height: 20px;
+  border-right: 2px dotted black;
+}
+
+@media all and (max-width:1300px) {
+
+  .sidebar,
+  .sidebar.change {
+    width: 250px;
+    padding: 2.5vh 20px;
+  }
+
+  .sidebar {
+    left: -290px;
+  }
+
+  .sidebarSheet,
+  .sidebar.change header,
+  .sidebar.change a span,
+  .sidebar.change nav a .dropDown {
+    display: flex;
+  }
+
+  .sidebar.change {
+    left: 0;
+  }
+
+  .screen,
+  .screen.change {
+    width: 95%;
+    padding: 2.5vh 2.5%;
+  }
+}
+
+@media all and (max-width:300px) {
+  .topNav {
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+  }
+
+  .userBox {
+    display: none;
+  }
+
+  .sidebar,
+  .sidebar.change {
+    width: 230px;
+    padding: 2.5vh 15px;
+  }
+
+}

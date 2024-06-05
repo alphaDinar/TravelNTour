@@ -1,0 +1,55 @@
+.loaderBox {
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.400);
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loaderBox legend {
+  display: flex;
+  height: 150px;
+  align-items: flex-start;
+  gap: 1vw;
+}
+
+.loaderBox legend sub {
+  display: block;
+  width: 30px;
+  height: 100px;
+  background: var(--theme);
+  background: skyblue;
+  border-radius: 40px;
+}
+
+@keyframes varyHeight {
+  0% {
+    height: 25px;
+  }
+
+  50% {
+    height: 50px;
+  }
+
+  100% {
+    height: 100px;
+  }
+
+}
+
+.loaderBox legend sub:nth-of-type(1) {
+  animation: varyHeight 2s infinite alternate;
+}
+
+.loaderBox legend sub:nth-of-type(2) {
+  animation: varyHeight 2s infinite alternate 1s;
+}
+
+.loaderBox legend sub:nth-of-type(3) {
+  animation: varyHeight 2s infinite alternate 0.5s;
+}

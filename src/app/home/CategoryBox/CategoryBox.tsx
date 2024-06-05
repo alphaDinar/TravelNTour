@@ -1,7 +1,7 @@
 'use client';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import styles from './categoryBox.module.css'
-import React, { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -9,8 +9,13 @@ import Link from 'next/link';
 import { CiStar } from 'react-icons/ci';
 import { TbBeach } from 'react-icons/tb';
 import { useWinSize } from '@/app/contexts/winSizeContext';
+import { GiOasis } from 'react-icons/gi';
 
-const CategoryBox = () => {
+interface defType extends Record<string, any> { };
+type CategoryProps = {
+  categories: defType[]
+}
+const CategoryBox: FC<CategoryProps> = ({ categories }) => {
   const { winSize } = useWinSize();
   const categorySwiper = useRef<{ swiper: any }>({ swiper: null });
 
@@ -31,7 +36,7 @@ const CategoryBox = () => {
       <header id='titleBoxMargin'>
         <div>
           <h3 id='title'>Select A Category</h3>
-          <small>Lorem ipsum dolor sit amet consectetur adipisicing</small>
+          <small>What type of tour do you have in mind?</small>
         </div>
         <nav>
           <MdChevronLeft onClick={categorySwiperPrev} />
@@ -45,13 +50,14 @@ const CategoryBox = () => {
         className={styles.slideBox}
         ref={categorySwiper}
       >
-        {Array(10).fill('a').map((el,i) => (
+        {categories.map((category, i) => (
           <SwiperSlide className={styles.slide} key={i}>
             <Link href={'/'} className={styles.category}>
-              <sup><span>4.5</span> <CiStar /></sup>
+              <sup id='temp'><span>4.5</span> <CiStar /></sup>
               <article className={styles.info}>
-                <TbBeach />
-                <strong>Beach Activity</strong>
+                {category.iconEl}
+                {/* <GiOasis /> */}
+                <strong>{category.tag}</strong>
                 <small>49 trips</small>
               </article>
             </Link>

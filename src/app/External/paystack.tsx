@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const createPayLink = async (amount: number, oid: string, email: string) => {
+export const createPayLink = async (amount: number, tid: string, email: string) => {
   // const host = 'http://localhost:3000';
   const host = 'http://localhost:3000';
   const url = "https://api.paystack.co/transaction/initialize";
@@ -7,7 +7,7 @@ export const createPayLink = async (amount: number, oid: string, email: string) 
   const data = {
     email: email,
     amount: amount,
-    callback_url: `${host}`,
+    callback_url: `${host}/myTours?tid=${tid}`,
     metadata: { cancel_action: `${host}/checkout` }
   };
 

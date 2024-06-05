@@ -1,16 +1,21 @@
-import { paymentMethodList } from '@/External/lists';
-import styles from './payBox.module.css';
 import Image from 'next/image';
+import styles from './payBox.module.css';
+import { FC } from 'react';
 
-const PayBox = () => {
+interface defType extends Record<string, any> { };
+type PayBoxProps = {
+  title: string,
+  itemList: defType[]
+}
+const PayBox: FC<PayBoxProps> = ({ title, itemList }) => {
   return (
     <section className={styles.payBox}>
-      <h4>Pay With</h4>
+      <h4>{title}</h4>
       <div>
         {Array(4).fill('a').map((counter, ci) => (
           <article key={ci}>
-            {paymentMethodList.map((el, i) => (
-              <Image alt='' width={100} height={100} src={el.img} key={i} />
+            {itemList.map((el, i) => (
+              <Image alt='' width={130} height={130} src={el.img} key={i} />
             ))}
           </article>
         ))}

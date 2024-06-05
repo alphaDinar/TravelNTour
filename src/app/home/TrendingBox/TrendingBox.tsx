@@ -1,7 +1,7 @@
 'use client'
 import styles from './trendingBox.module.css';
 import { MdChevronLeft, MdChevronRight, MdEast, MdOutlineFavorite, MdOutlineFavoriteBorder, MdStar } from "react-icons/md";
-import React, { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -11,27 +11,28 @@ import { TbBeach } from 'react-icons/tb';
 import { useWinSize } from '@/app/contexts/winSizeContext';
 import Image from 'next/image';
 import { FaRegClock, FaStar } from 'react-icons/fa';
+import { sortByViews } from '@/app/External/sort';
+import { getDaysLeft, getRealDate } from '@/app/External/time';
 
 
-const TrendingBox = () => {
-  const places = [
-    'https://res.cloudinary.com/dvnemzw0z/image/upload/v1715406123/travelntour/GettyImages-480604953-589aac555f9b5874ee32b9b1_vjfrxw.jpg',
-    'https://res.cloudinary.com/dvnemzw0z/image/upload/v1715406171/travelntour/TAL-dubai-DUBAITG1123-17390625954c4be3902a440d8fffde67_pz198o.jpg'
-  ];
-
+interface defType extends Record<string, any> { };
+type TrendingBoxProps = {
+  tours: defType[]
+}
+const TrendingBox: FC<TrendingBoxProps> = ({ tours }) => {
   const { winSize } = useWinSize();
-  const categorySwiper = useRef<{ swiper: any }>({ swiper: null });
+  const trendingSwiper = useRef<{ swiper: any }>({ swiper: null });
 
-  const categorySwiperPrev = () => {
-    console.log(categorySwiper.current)
-    if (categorySwiper.current) {
-      categorySwiper.current.swiper.slidePrev();
+  const trendingSwiperPrev = () => {
+    console.log(trendingSwiper.current)
+    if (trendingSwiper.current) {
+      trendingSwiper.current.swiper.slidePrev();
     }
   }
 
-  const categorySwiperNext = () => {
-    if (categorySwiper.current) {
-      categorySwiper.current.swiper.slideNext();
+  const trendingSwiperNext = () => {
+    if (trendingSwiper.current) {
+      trendingSwiper.current.swiper.slideNext();
     }
   }
   return (
@@ -39,11 +40,11 @@ const TrendingBox = () => {
       <header id='titleBoxMargin'>
         <div>
           <h3 id='title'>Trending</h3>
-          <small>Lorem ipsum dolor sit amet consectetur adipisicing</small>
+          <small>Here are the top trending tours.</small>
         </div>
         <nav>
-          <MdChevronLeft />
-          <MdChevronRight />
+          <MdChevronLeft onClick={trendingSwiperPrev} />
+          <MdChevronRight onClick={trendingSwiperNext} />
         </nav>
       </header>
 
@@ -51,40 +52,40 @@ const TrendingBox = () => {
         slidesPerView={winSize > 1100 ? 3 : winSize > 800 && winSize < 1100 ? 2 : winSize > 500 && winSize < 800 ? 2 : 1}
         spaceBetween={winSize > 500 ? 20 : 15}
         className={styles.slideBox}
-        ref={categorySwiper}
+        ref={trendingSwiper}
       >
-        {Array(10).fill('a').map((el,i) => (
+        {sortByViews(tours).map((tour, i) => (
           <SwiperSlide className={styles.slide} key={i}>
             <div className={styles.trend}>
               <div className={styles.imgBox}>
-                <Image alt='' src={places[1]} fill className='cover' />
+                <Image alt='' src={tour.image.url} fill className='cover' />
               </div>
               <div className={styles.top}>
                 <p>
-                  <strong>Dubai</strong>
-                  <small>Luxury Living at its Best</small>
+                  <strong>{tour.id}</strong>
+                  <small>{tour.description}</small>
                 </p>
                 <MdOutlineFavoriteBorder />
               </div>
               <div className={styles.mid}>
                 <p>
-                  <strong>GHS 895.00 </strong>
+                  <strong>GHS {tour.price.toLocaleString()} </strong>
                   <small>Price</small>
                 </p>
-                <p>
+                <p id='temp'>
                   <legend>
                     {Array(4).fill('a').map((ell, ii) => (
-                      <FaStar key={ii}/>
+                      <FaStar key={ii} />
                     ))}
                   </legend>
                 </p>
               </div>
               <div className={styles.low}>
                 <p>
-                  <legend><FaRegClock /> 37 Days</legend>
-                  <small>23rd October - 30th December</small>
+                  <legend><FaRegClock /> {getDaysLeft(tour.startDate)}</legend>
+                  <small>{getRealDate(tour.startDate)} - {getRealDate(tour.endDate)}</small>
                 </p>
-                <Link href={'/'}><MdEast /></Link>
+                <Link href={{ pathname: '/viewTour', query: { tid: tour.id } }}><MdEast /></Link>
               </div>
             </div>
           </SwiperSlide>

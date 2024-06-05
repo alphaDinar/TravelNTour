@@ -2,22 +2,22 @@ import { MdChevronLeft, MdChevronRight, MdStar } from 'react-icons/md';
 import styles from './destinationBox.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FC } from 'react';
+import { getRealDate } from '@/app/External/time';
 
 interface defType extends Record<string, any> { };
-const DestinationBox = () => {
-  const places = [
-    'https://res.cloudinary.com/dvnemzw0z/image/upload/v1715406123/travelntour/GettyImages-480604953-589aac555f9b5874ee32b9b1_vjfrxw.jpg',
-    'https://res.cloudinary.com/dvnemzw0z/image/upload/v1715406171/travelntour/TAL-dubai-DUBAITG1123-17390625954c4be3902a440d8fffde67_pz198o.jpg'
-  ];
-
-  const snap = (url: string, target: string, place: defType) => {
-    return <Link href={''} className={styles.snap}>
-      <Image alt='' src={url} fill></Image>
+type DestinationBoxProps = {
+  tours: defType[]
+}
+const DestinationBox: FC<DestinationBoxProps> = ({ tours }) => {
+  const snap = (tour: defType) => {
+    return <Link href={{ pathname: '/viewTour', query: { tid: tour.id } }} className={styles.snap}>
+      <Image alt='' src={tour.image.url} fill></Image>
       <article className={styles.sheet}>
-        <legend>4.5 <MdStar /></legend>
+        <legend id='temp'>4.5 <MdStar /></legend>
         <p>
-          <span>Malaysia</span>
-          <small>23rd may</small>
+          <span>{tour.id}</span>
+          <small>{getRealDate(tour.startDate)}</small>
         </p>
       </article>
     </Link>
@@ -34,7 +34,7 @@ const DestinationBox = () => {
       <header id='titleBox'>
         <div>
           <h3 id='title'>Top Destinations</h3>
-          <small>Lorem ipsum dolor sit amet consectetur adipisicing</small>
+          <small>Make a choice from our top Destinations.</small>
         </div>
         <nav>
           <MdChevronLeft />
@@ -44,17 +44,21 @@ const DestinationBox = () => {
 
       <section className={styles.gallery}>
         <section className={styles.left}>
-          {snap(places[0], '/', place)}
-          {snap(places[0], '/', place)}
+          {tours.length > 1 &&
+            <>
+              {snap(tours[0])}
+              {snap(tours[1])}
+            </>
+          }
         </section>
         <section className={styles.mid}>
-          {snap(places[0], '/', place)}
+          {tours.length > 2 && snap(tours[2])}
         </section>
         <section className={styles.right}>
-          {snap(places[0], '/', place)}
+          {tours.length > 3 && snap(tours[3])}
           <div className={styles.snaps}>
-            {snap(places[0], '/', place)}
-            {snap(places[0], '/', place)}
+            {tours.length > 4 && snap(tours[4])}
+            {tours.length > 5 && snap(tours[5])}
           </div>
         </section>
       </section>

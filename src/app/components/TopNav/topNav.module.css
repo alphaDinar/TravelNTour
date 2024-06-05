@@ -13,6 +13,65 @@
   color: black;
 }
 
+.drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2000;
+}
+
+
+.drop ul {
+  top: 100%;
+  background: white;
+  border: 1px solid gray;
+  border-radius: 10px;
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: none;
+  flex-direction: column;
+  width: max-content;
+}
+
+.drop:hover ul {
+  display: flex;
+}
+
+.drop span {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+}
+
+.drop ul hr {
+  border-top: 1px solid gray;
+}
+
+.drop ul a:nth-child(1) {
+  border-radius: 10px 10px 0 0;
+}
+
+.drop ul a:nth-last-child(1) {
+  border-radius: 0 0 10px 10px;
+}
+
+.drop ul a {
+  padding: 7px;
+}
+
+.drop ul a:hover {
+  background: var(--theme);
+  color: white;
+}
+
+
+.drop span svg {
+  font-size: 1.3rem;
+}
+
+
 .left {
   display: flex;
   align-items: center;
@@ -40,7 +99,45 @@
   color: white !important;
   padding: 5px 13px;
   border-radius: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
+
+.socialBox{
+  display: flex;
+  gap: 0.5rem;
+}
+.socialBox svg {
+  color: var(--theme);
+  font-size: 1.5rem;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  min-width: 70px;
+  padding: 5px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: whitesmoke;
+}
+
+.loader svg {
+  animation: rotate 1s linear infinite;
+}
+
+
 
 @media all and (max-width:650px) {
   .topNav {
@@ -55,7 +152,8 @@
     display: flex;
   }
 
-  .show {
+  .show,
+  .drop {
     display: none;
   }
 
@@ -72,8 +170,11 @@
     z-index: 1000;
     width: 150px;
     padding: 15px;
+    gap: 0.3rem;
     transition: 0.4s ease;
     z-index: 1000;
+    border-radius: 0 0 0 15px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   }
 
   .left nav.change {
@@ -85,7 +186,6 @@
     right: 100%;
     top: 0;
     background: wheat;
-    /* background: salmon; */
     color: black;
     cursor: pointer;
     width: 30px;

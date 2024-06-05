@@ -11,20 +11,36 @@ import Image from 'next/image';
 import { MdEast, MdLocationPin, MdWest } from 'react-icons/md';
 import { CiCalendar, CiCalendarDate, CiLocationOn, CiSearch } from 'react-icons/ci';
 import { RiSearch2Line } from 'react-icons/ri';
+import { FC, useRef } from 'react';
+import { sortByPriority } from '@/app/External/sort';
+import { getDaysLeft, getRealDate } from '@/app/External/time';
 
-const HeadBox = () => {
-  const places = [
-    'https://res.cloudinary.com/dvnemzw0z/image/upload/v1715406123/travelntour/GettyImages-480604953-589aac555f9b5874ee32b9b1_vjfrxw.jpg',
-    'https://res.cloudinary.com/dvnemzw0z/image/upload/v1715406171/travelntour/TAL-dubai-DUBAITG1123-17390625954c4be3902a440d8fffde67_pz198o.jpg'
-  ];
+interface defType extends Record<string, any> { };
+type HeadBoxProps = {
+  tours: defType[]
+}
+const HeadBox: FC<HeadBoxProps> = ({ tours }) => {
+  const headSwiper = useRef<{ swiper: any }>({ swiper: null });
 
-  const locs = ['Nepal Country', 'Dubai City']
+  const headSwiperPrev = () => {
+    console.log(headSwiper.current)
+    if (headSwiper.current) {
+      headSwiper.current.swiper.slidePrev();
+    }
+  }
 
+  const headSwiperNext = () => {
+    if (headSwiper.current) {
+      headSwiper.current.swiper.slideNext();
+    }
+  }
   return (
     <section className={styles.headBox} id='horMargin'>
       <Swiper
+        ref={headSwiper}
         spaceBetween={30}
         effect={'fade'}
+        loop
         autoplay={{
           delay: 3500,
           disableOnInteraction: true,
@@ -32,16 +48,19 @@ const HeadBox = () => {
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
         className={styles.slideBox}
       >
-        {places.map((el, i) => (
+        {sortByPriority(tours).map((tour, i) => (
           <SwiperSlide className={styles.slide} key={i}>
-            <Image alt='' src={el} fill className='cover' />
-            <Link href={{ pathname: '/viewTour', query: { tid: locs[i] } }} className={styles.sheet}>
-              <span>- The Himalayan  Mountain Ranges</span>
-              <h3>{locs[i]}</h3>
-              <strong>23rd march - 30th May</strong>
+            <Image alt='' src={tour.image.url} fill className='cover' />
+            <Link href={{ pathname: '/viewTour', query: { tid: tour.id } }} className={styles.sheet}>
+              <span>- {tour.description}</span>
+              <article>
+                <h3>{tour.id}</h3>
+                <span>{getDaysLeft(tour.startDate)}</span>
+              </article>
+              <strong>{getRealDate(tour.startDate)} - {getRealDate(tour.endDate)}</strong>
               <nav>
-                <MdWest />
-                <MdEast />
+                <MdWest onClick={headSwiperPrev} />
+                <MdEast onClick={headSwiperNext} />
               </nav>
             </Link>
           </SwiperSlide>

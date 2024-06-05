@@ -24,13 +24,33 @@
   --text: #232323;
   --rateBox: #fceed1;
   --score: #a49578;
+  --primary: #44d0ef;
+  --red: #e67681;
+  --pass: #01c293;
 }
 
 
-main {
+main,
+#pageBox {
   display: flex;
   flex-direction: column;
+}
+
+main {
   gap: 5vh;
+}
+
+.big {
+  font-weight: normal;
+  font-family: 'Bebas Neue', cursive;
+}
+
+#pageBox {
+  gap: 3.5vh;
+}
+
+#temp {
+  visibility: hidden;
 }
 
 #hor,
@@ -86,6 +106,7 @@ main {
 }
 
 #horMargin,
+#pageBox,
 #divider {
   width: 80%;
   margin: auto;
@@ -106,6 +127,9 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
+ul,li{
+  list-style: none;
+}
 .cover {
   object-fit: cover;
 }
@@ -152,6 +176,7 @@ body::-webkit-scrollbar-thumb {
 
   #horMargin,
   #divider,
+  #pageBox,
   #titleBoxMargin {
     width: 90%;
     margin: auto;
@@ -172,6 +197,7 @@ body::-webkit-scrollbar-thumb {
 
   #horMargin,
   #divider,
+  #pageBox,
   #titleBoxMargin {
     width: 95%;
     margin: auto;
@@ -194,4 +220,43 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     text-align: center;
   }
+}
+
+
+
+@keyframes toggleHeight {
+  0% {
+    height: 10px;
+  }
+
+  50% {
+    height: 15px;
+  }
+
+  100% {
+    height: 20px;
+  }
+}
+
+.miniLoader {
+  display: flex;
+  gap: 0.5rem;
+  min-height: 20px;
+}
+
+.miniLoader sub {
+  display: block;
+  width: 10px;
+  height: 20px;
+  border-radius: 40px;
+  background: white;
+  animation: toggleHeight 0.5s infinite alternate ease-in-out;
+}
+
+.miniLoader sub:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.miniLoader sub:nth-child(3) {
+  animation-delay: 1s;
 }
