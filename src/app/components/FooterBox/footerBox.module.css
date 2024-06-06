@@ -1,43 +1,145 @@
 .footerBox {
-  background: black;
-  padding: 3vh 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-  align-items: center;
-  color: white;
+  display: grid;
+  gap: 1.5vh;
+  background: rgb(249, 249, 249);
+  padding-top: 4vh;
+  padding-bottom: 4vh;
 }
 
 .footerBox hr {
-  width: 100%;
-  border-top: 2px solid gray;
+  border-top: 3px solid darkgray;
 }
 
-.con {
+.quickBox,
+.officeBox {
   display: flex;
-  width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
-.con article,
-.con article p {
+.linkBox {
   display: flex;
-  flex-direction: column;
-  text-align: center;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.socialBox {
+.quickBox p {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
-.socialBox svg {
-  font-size: 1.6rem;
+.officeBox .left,
+.officeBox .right p {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-@media all and (max-width:650px) {
-  .con {
+.officeBox .left small {
+  font-weight: 600;
+  color: var(--pass);
+}
+
+.officeBox .left strong {
+  font-size: 1.3rem;
+}
+
+.officeBox .right {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.officeBox .right svg:nth-child(1) {
+  font-size: 3rem;
+  color: var(--pass);
+}
+
+
+.linkBox .left {
+  display: flex;
+  gap: 2rem;
+}
+
+.linkBox .left article,
+.linkBox .left article p {
+  display: grid;
+}
+
+.linkBox .left article p>* {
+  font-size: 0.9rem;
+  color: rgb(71, 71, 71);
+}
+
+.footerBox form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.footerBox form textarea {
+  resize: none;
+  height: 80px;
+}
+
+.footerBox form textarea,
+.footerBox form input {
+  width: 250px;
+  padding: 8px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.footerBox form button {
+  background: var(--pass);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 8px;
+}
+
+@media all and (max-width:750px) {
+
+  .quickBox,
+  .officeBox,
+  .linkBox {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .officeBox .left,
+  .officeBox .right p {
+    align-items: center;
+  }
+
+  .officeBox .right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .linkBox {
+    gap: 1.5rem;
+  }
+
+  .linkBox .left {
     flex-direction: column;
     gap: 1rem;
+    text-align: center;
   }
+
+  .footerBox form {
+    display: flex;
+    width: 95%;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footerBox form textarea,
+  .footerBox form input {
+    width: calc(100% - 16px);
+  }
+
 }

@@ -64,16 +64,25 @@ const ViewTour = async ({ searchParams }: { searchParams: { tid: string } }) => 
               </legend>
             </div>
 
-            <div className={styles.guideBox}>
+            {/* <div className={styles.guideBox}>
               <Image alt='' src={face} width={50} height={50} className='contain' />
 
               <p>
                 <strong>Hosted by Samuel</strong>
                 <small>10 years Experience</small>
               </p>
-            </div>
+            </div> */}
 
             <div className={styles.serviceBox}>
+              <legend>
+                <Image alt='' src={face} width={50} height={50} className='contain' />
+
+                <p>
+                  <strong>Hosted by Samuel</strong>
+                  <small>10 years Experience</small>
+                </p>
+              </legend>
+              <hr />
               {tour.accommodation ?
                 <legend>
                   <RiHomeHeartLine />

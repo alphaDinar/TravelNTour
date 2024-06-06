@@ -184,9 +184,16 @@
 
 .formBox form p {
   display: flex;
-  display: grid;
+  gap: 0.5rem;
   align-items: center;
-  grid-template-columns: 1fr 15px;
+}
+
+.formBox form p legend {
+  background: var(--primary);
+  padding: 8px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .errorList {
@@ -204,13 +211,13 @@
 
 .formBox form p sub {
   display: block;
-  width: 10px;
   color: white;
-  min-height: 20px;
   display: flex;
+  padding: 8px;
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .formBox form p sub svg {
