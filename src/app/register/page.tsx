@@ -62,7 +62,6 @@ const Register = () => {
         if (tourist !== undefined && tourist.data() !== undefined) {
           router.push(authTarget);
         } else {
-          const keywords = JSON.parse(sessionStorage.getItem('maqKeywords') || '[]');
           setDoc(doc(fireStoreDB, 'Tourists/' + user.user.uid), {
             email: user.user.email,
             contact: '',

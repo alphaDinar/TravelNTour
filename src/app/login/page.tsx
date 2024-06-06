@@ -33,11 +33,11 @@ const Login = () => {
     signInWithPopup(fireAuth, googleProvider)
       .then(async (user) => {
         const username = user.user.displayName || 'Dashboard';
-        const customer = await getDoc(doc(fireStoreDB, 'Customers/' + user.user.uid))
+        const customer = await getDoc(doc(fireStoreDB, 'Tourists/' + user.user.uid))
         if (customer !== undefined && customer.data() !== undefined) {
           router.push(authTarget)
         } else {
-          setDoc(doc(fireStoreDB, 'Customers/' + user.user.uid), {
+          setDoc(doc(fireStoreDB, 'Tourists/' + user.user.uid), {
             email: user.user.email,
             contact: '',
             username: username,

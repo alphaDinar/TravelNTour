@@ -3,10 +3,10 @@ import styles from '../../styles/visa.module.css';
 import { FC } from 'react';
 
 interface defType extends Record<string, any> { };
-type ServiceBoxProps = {
-  serviceList : defType[]
-}
-const ServiceBox : FC<ServiceBoxProps> = ({serviceList}) => {
+// type ServiceBoxProps = {
+//   serviceList : defType[]
+// }
+const ServiceBox = () => {
   const tes = "https://res.cloudinary.com/dvnemzw0z/image/upload/v1717600037/travelntour/azer1_mpdyeo.jpg";
 
   return (
@@ -17,7 +17,7 @@ const ServiceBox : FC<ServiceBoxProps> = ({serviceList}) => {
 
       <section className={styles.services}>
         {Array(8).fill('a').map((el, i) => (
-          <div className={styles.service}>
+          <div className={styles.service} key={i}>
             <div className={styles.imgBox}>
               <Image alt="" src={tes} fill className="cover" />
             </div>
