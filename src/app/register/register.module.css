@@ -16,15 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #76A8D7;
 }
-
-/* 
-.left img {
-  object-fit: contain !important;
-} */
-
-
 
 .left img {
   object-fit: cover;
@@ -36,9 +28,7 @@
 }
 
 .stepBox {
-  /* background: black; */
   display: flex;
-  /* align-items: flex-end; */
 }
 
 .stepBox p {

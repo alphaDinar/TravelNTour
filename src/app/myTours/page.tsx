@@ -63,7 +63,7 @@ const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string
           <header>Upcoming</header>
           <section className={styles.tours}>
             {trips.map((trip: defType, i: number) => (
-              <Link href={''} className={styles.tour} key={i}>
+              <Link href={{ pathname: '/viewMyTour', query: { tour: JSON.stringify(trip.tour) } }} className={styles.tour} key={i}>
                 <div className={styles.imgBox}>
                   <Image alt='' src={trip.tour.image.url} fill className='cover' />
                 </div>
@@ -74,7 +74,7 @@ const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string
                 </article>
 
                 <article>
-                  <legend className='big'>{getDaysLeft(trip.tour.startDate)}</legend>
+                  <legend>{getDaysLeft(trip.tour.startDate)}</legend>
                   <p>
                     <small>{getRealDate(trip.tour.startDate)}</small>
                     -
@@ -83,7 +83,7 @@ const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string
                 </article>
 
                 <div className={styles.priceBox}>
-                  <sub style={trip.payStatus ? { background: 'var(--pass)' } : { background: 'tomato' }}></sub>
+                  <sub style={trip.payStatus ? { background: 'springgreen' } : { background: 'tomato' }}></sub>
                   <h4 className='big'>GHS {trip.price.toLocaleString()}</h4>
                   <MdEast />
                 </div>
@@ -92,7 +92,7 @@ const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string
           </section>
         </section>
 
-        <section className={styles.tourSet}>
+        {/* <section className={styles.tourSet}>
           <header>Due</header>
           <section className={styles.tours}>
             {Array(2).fill('a').map((el, i) => (
@@ -118,8 +118,9 @@ const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string
               </Link>
             ))}
           </section>
-        </section>
+        </section> */}
 
+        <section className='sizedBox'></section>
       </section>
     </main>
   );

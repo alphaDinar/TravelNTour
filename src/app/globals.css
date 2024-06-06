@@ -20,6 +20,7 @@
 :root {
   --bg: #232323;
   --theme: rgb(19, 218, 119);
+  --theme: #E25658;
   --text: white;
   --text: #232323;
   --rateBox: #fceed1;
@@ -43,6 +44,11 @@ main {
 .big {
   font-weight: normal;
   font-family: 'Bebas Neue', cursive;
+}
+
+.sizedBox {
+  height: 3vh;
+  visibility: hidden;
 }
 
 #pageBox {
@@ -127,9 +133,11 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
-ul,li{
+ul,
+li {
   list-style: none;
 }
+
 .cover {
   object-fit: cover;
 }

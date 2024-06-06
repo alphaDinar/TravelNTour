@@ -10,3 +10,15 @@
 .pageHeader h3 svg {
   cursor: pointer;
 }
+
+@media all and (max-width:750px){
+  .pageHeader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pageHeader h3{
+    justify-content: center;
+    width: 100%;
+  }
+}

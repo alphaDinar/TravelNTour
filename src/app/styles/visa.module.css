@@ -1,0 +1,274 @@
+.formBox {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.formBox .left header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.formBox .left header button {
+  padding: 5px;
+  background: var(--primary);
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+}
+
+.formBox .left header strong {
+  font-size: 1.8rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.formBox .left header small {
+  color: gray;
+}
+
+.formBox .left {
+  display: grid;
+  gap: 1rem;
+}
+
+.formBox .left form {
+  display: grid;
+  gap: 1rem;
+}
+
+.formBox .left form p {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.formBox .left form input {
+  background: whitesmoke;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid whitesmoke;
+  transition: 0.3s ease;
+}
+
+.formBox .left form input:focus {
+  border: 1px solid var(--theme);
+}
+
+.formBox .left hr {
+  border-top: 4px solid lightgray;
+}
+
+.formBox .left header strong sub {
+  border-top: 4px solid var(--theme);
+}
+
+.formBox .left form button {
+  background: var(--theme);
+  padding: 8px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.formBox .right {
+  height: 500px;
+  position: relative;
+}
+
+.formBox .right img {
+  border-radius: 20px;
+}
+
+.exploreBox,
+.bannerBox {
+  background: var(--theme);
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  gap: 4vh;
+}
+
+.exploreBox {
+  background: black;
+}
+
+.bannerBox {
+  background: whitesmoke;
+}
+
+.exploreBox,
+.serviceBox,
+.bannerBox,
+.exploreBox header,
+.serviceBox header,
+.bannerBox header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.exploreBox header {
+  gap: 1vh;
+}
+
+.exploreBox header strong,
+.serviceBox header strong,
+.bannerBox header strong {
+  font-size: 1.8rem;
+}
+
+.exploreBox header strong {
+  color: white;
+}
+
+.exploreBox header small {
+  color: lightgray;
+}
+
+.exploreBox .gallery,
+.services {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+}
+
+.exploreBox .gallery {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.services {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.exploreBox .gallery .imgBox {
+  height: 300px;
+  position: relative;
+}
+
+.exploreBox .gallery .imgBox img {
+  border-radius: 10px;
+}
+
+.serviceBox header strong,
+.bannerBox header strong {
+  border-bottom: 4px solid var(--theme);
+}
+
+.serviceBox {
+  gap: 4vh;
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: var(--primary);
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
+}
+
+.service article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.service article strong {
+  font-size: 1.2rem;
+}
+
+.service .imgBox {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.service .imgBox img {
+  border-radius: 50%;
+}
+
+.skills {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.skill {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-direction: column;
+  text-align: center;
+}
+.skill svg{
+  color: var(--primary);
+  font-size: 3rem;
+}
+
+.skill strong {
+  font-size: 2rem;
+}
+
+
+
+@media all and (max-width:1100px) {
+  .formBox {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2vh;
+  }
+
+  .formBox .left {
+    width: 100%;
+  }
+
+  .formBox .right {
+    width: 100%;
+    height: 300px;
+  }
+
+  .exploreBox .gallery,
+  .services {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .exploreBox .gallery .imgBox {
+    width: 250px;
+    height: 200px;
+  }
+
+  .service {
+    width: 250px;
+  }
+  .skills {
+    flex-wrap: wrap;
+  }
+}
+
+@media all and (max-width:500px) {
+  .services {
+    gap: 1rem;
+  }
+
+  .formBox .right {
+    height: 200px;
+  }
+
+  .exploreBox .gallery .imgBox {
+    width: 90%;
+    height: 240px;
+  }
+
+  .service {
+    width: 90%;
+  }
+}
