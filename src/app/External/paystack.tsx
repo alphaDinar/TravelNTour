@@ -8,7 +8,7 @@ export const createPayLink = async (amount: number, tid: string, email: string) 
     email: email,
     amount: amount,
     callback_url: `${host}/myTours?tid=${tid}`,
-    metadata: { cancel_action: `${host}/checkout` }
+    metadata: { cancel_action: `${host}/myTours?tid=${tid}` }
   };
 
   const response = await axios.post(url, data, {
