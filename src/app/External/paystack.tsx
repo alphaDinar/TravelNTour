@@ -13,8 +13,9 @@ export const createPayLink = async (amount: number, tid: string, email: string) 
 
   const response = await axios.post(url, data, {
     headers: {
-      Authorization: `Bearer sk_test_0442b213d2c6710e6313d112dd1e7b11f8cd2f32`,
-      // Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_API_KEY}`,
+      // Authorization: `Bearer sk_test_0442b213d2c6710e6313d112dd1e7b11f8cd2f32`,
+      // Authorization: `Bearer sk_live_d3fb0b127d4908c2381db2df50bb135ac4ea0876`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_API_KEY}`,
       'Cache-Control': 'no-cache'
     }
   })
@@ -32,8 +33,9 @@ export const verifyPayment = async (payRef: string) => {
 
   const response = await axios.get(url, {
     headers: {
-      Authorization: `Bearer sk_test_0442b213d2c6710e6313d112dd1e7b11f8cd2f32`,
-      // Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_API_KEY}`,
+      // Authorization: `Bearer sk_test_0442b213d2c6710e6313d112dd1e7b11f8cd2f32`,
+      // Authorization: `Bearer sk_live_d3fb0b127d4908c2381db2df50bb135ac4ea0876`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_API_KEY}`,
       'Cache-Control': 'no-cache'
     }
   })
