@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pryme Tourism - Unforgettable Tours & Expert Visa Services for Students & Business Travelers",
-  description: "Unforgettable Adventure Tours & Hassle-Free Student & Business Visas. Explore the World with Pryme Tourism. Book Your Dream Trip Today!",
+  description: "Unforgettable Adventure Tours & Hassle-Free Student & Business Visas. Explore the World with Pryme Tourism. Book Your Dream Trip Today",
 };
 
 export default function RootLayout({
