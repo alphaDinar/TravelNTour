@@ -10,8 +10,8 @@ import { UserContextProvider } from "./contexts/userContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Pryme Tourism",
-  description: "Unleash your wanderlust! Explore the world with our unforgettable tours and seamless visa services for students and business travelers",
+  title: "Pryme Tourism - Unforgettable Tours & Expert Visa Services for Students & Business Travelers",
+  description: "Unforgettable Adventure Tours & Hassle-Free Student & Business Visas. Explore the World with Pryme Tourism. Book Your Dream Trip Today!",
 };
 
 export default function RootLayout({
