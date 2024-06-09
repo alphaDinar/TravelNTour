@@ -88,7 +88,7 @@ const AddTour = () => {
 
 
     setIsLoading(false);
-  }, [])
+  }, [setIsLoading])
 
   const handleImage = (media: File) => {
     if (media.size / 1000 > 5000) {

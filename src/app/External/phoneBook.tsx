@@ -1,7 +1,7 @@
+import { fireAuth, fireStoreDB } from '@/Firebase/base';
 import bcrypt from 'bcryptjs';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { fireAuth, fireStoreDB } from '@/Firebase/base';
 
 export const makePassword = async (password: string) => {
   const hash = await bcrypt.hash(password, 10);

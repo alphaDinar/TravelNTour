@@ -1,5 +1,4 @@
 'use client'
-import { fireStoreDB } from '@/Firebase/base';
 import { collection, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,14 +7,14 @@ import { useEffect, useState } from 'react';
 import { IoMdDoneAll } from 'react-icons/io';
 import { MdArrowBack } from 'react-icons/md';
 import logo from '../../../public/logo.png';
-import styles from '../register/register.module.css';
-import { useAuthTarget } from '../contexts/authTargetContext';
-import { checkContact, checkPassLength, checkPassLower, checkPassSpecial, checkPassUpper } from '@/app/External/auth';
-import { countryList } from '../External/lists';
-import { sendOTP, verifyOTP } from '../External/arkesel';
-import { checkUser, makePassword } from '../External/phoneBook';
 import place from '../../../public/register.jpg';
-
+import { sendOTP, verifyOTP } from '../External/arkesel';
+import { countryList } from '../External/lists';
+import { checkUser, makePassword } from '../External/phoneBook';
+import { useAuthTarget } from '../contexts/authTargetContext';
+import styles from '../register/register.module.css';
+import { fireStoreDB } from '@/Firebase/base';
+import { checkContact, checkPassLength, checkPassLower, checkPassSpecial, checkPassUpper } from '../External/auth';
 
 const ForgotPassword = () => {
   const router = useRouter();

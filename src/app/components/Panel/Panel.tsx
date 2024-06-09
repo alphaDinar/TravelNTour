@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { BiMessageSquare } from "react-icons/bi";
 import { GoDot } from "react-icons/go";
 import { ImNotification } from "react-icons/im";
@@ -11,14 +11,20 @@ import Notify from "../Notify/Notify";
 // import { useIsLoading } from "../contexts/isLoadingContext";
 import styles from './panel.module.css';
 import { useIsLoading } from "@/app/contexts/isLoadingContext";
-import { frontDeskTargetList } from "@/app/External/lists";
+import { targetList } from "@/app/External/lists";
+import { fireAuth } from "@/Firebase/base";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+
 
 type panelProps = {
   children: ReactNode
 }
 
 const Panel = ({ children }: panelProps) => {
+  const router = useRouter();
   const { isLoading } = useIsLoading();
+  const [isManager, setIsManager] = useState(false);
 
   const dropDown = <RiArrowDropDownLine className={styles.dropDown} />;
   const dot = <GoDot className={styles.dot} />;
@@ -41,12 +47,29 @@ const Panel = ({ children }: panelProps) => {
     }
   }
 
+  useEffect(() => {
+    const authStream = onAuthStateChanged(fireAuth, (user) => {
+      if (user) {
+        if (user.email === 'pryme@manager.com') {
+          setIsManager(true);
+        } else {
+          signOut(fireAuth)
+            .then(() => router.push('/manager/login'));
+        }
+      } else {
+        router.push('/manager/login');
+      }
+    })
+
+    return () => authStream();
+  }, [router])
+
   return (
     <main className={styles.panel}>
       <section className={sidebarToggled ? `${styles.sidebar} ${styles.change}` : styles.sidebar}>
-        <header>Smart Hotel</header>
+        <header>Pryme Tourism</header>
         <nav>
-          {frontDeskTargetList.map((el, i) => (
+          {targetList.map((el, i) => (
             <section key={i}>
               <h3>{el.tag.toUpperCase()}</h3>
               <article>
@@ -75,9 +98,9 @@ const Panel = ({ children }: panelProps) => {
         <section className={styles.topNav}>
           <article className={styles.left}>
             <MdOutlineMenu onClick={toggleSidebar} className={styles.menuTab} />
-            <MdSearch />
+            {/* <MdSearch /> */}
           </article>
-          <article className={styles.right}>
+          {/* <article className={styles.right}>
             <legend>
               <BiMessageSquare />
               <sup>4</sup>
@@ -96,9 +119,10 @@ const Panel = ({ children }: panelProps) => {
 
               <span>Hi, <strong>Julia</strong></span>
             </div>
-          </article>
+          </article> */}
         </section>
-        {children}
+
+        {isManager && children}
         {isLoading && <Loading />}
 
         {/* {notify.active && <Notify />} */}

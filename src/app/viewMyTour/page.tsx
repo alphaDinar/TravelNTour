@@ -10,7 +10,7 @@ import { categoryList } from '../External/assets';
 import { getDaysLeft, getRealDate } from '../External/time';
 
 interface defType extends Record<string, any> { };
-const ViewTour = async ({ searchParams }: { searchParams: { tour: string } }) => {
+const ViewTour = ({ searchParams }: { searchParams: { tour: string } }) => {
   const tour: defType = JSON.parse(searchParams.tour);
 
   const face = 'https://res.cloudinary.com/dvnemzw0z/image/upload/v1715785291/travelntour/handsome-smiling-young-african-man_171337-9650_rwzpgc.jpg';

@@ -1,10 +1,10 @@
 'use client'
-import { fireStoreDB } from '@/Firebase/base';
-import { createPayLink } from '@/app/External/paystack';
 import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 import { useUser } from '../contexts/userContext';
+import { createPayLink } from '../External/paystack';
+import { fireStoreDB } from '@/Firebase/base';
 
 interface defType extends Record<string, any> { };
 type PaymentProps = {
@@ -24,6 +24,7 @@ const PaymentTab: FC<PaymentProps> = ({ tour }) => {
         uid: user.uid,
         username: user.tourist.username,
         email: email,
+        contact: user.tourist.contact,
         tour: tour,
         price: tour.price,
         payStatus: 0,

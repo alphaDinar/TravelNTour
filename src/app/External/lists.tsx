@@ -68,14 +68,18 @@ export const countryList = [
 
 
 import { MdBolt, MdOutlineConstruction, MdOutlineGroupAdd } from "react-icons/md";
+import { TbBeach } from 'react-icons/tb';
+import { GiMoneyStack, GiOasis } from 'react-icons/gi';
 
 
-export const frontDeskTargetList = [
+export const targetList = [
   {
     tag: 'home',
     linkList: [
-      { type: 'normal', tag: 'Overview', iconEl: <MdBolt />, target: '/' },
-      { type: 'normal', tag: 'Add Guest', iconEl: <MdOutlineGroupAdd />, target: '/frontDesk/addGuest' },
+      // { type: 'normal', tag: 'Overview', iconEl: <MdBolt />, target: '/' },
+      { type: 'normal', tag: 'Tours', iconEl: <GiOasis />, target: '/manager' },
+      { type: 'normal', tag: 'Add Tour', iconEl: <TbBeach />, target: '/manager/addTour' },
+      { type: 'normal', tag: 'Booked Trips', iconEl: <GiMoneyStack />, target: '/manager/trips' },
       {
         type: 'dropDown', tag: 'Dropped', iconEl: <MdOutlineConstruction />, index: 0,
         subList: [
@@ -85,41 +89,41 @@ export const frontDeskTargetList = [
       }
     ]
   },
-  {
-    tag: 'Guests',
-    linkList: [
-      { type: 'normal', tag: 'Check-Ins', iconEl: <MdBolt />, target: '/' },
-      { type: 'normal', tag: 'Payments', iconEl: <MdBolt />, target: '/' },
-      { type: 'normal', tag: 'Check-Outs', iconEl: <MdBolt />, target: '/' },
-    ]
-  },
-  {
-    tag: 'Rooms',
-    linkList: [
-      { type: 'normal', tag: 'Available Rooms', iconEl: <MdBolt />, target: '/' },
-      { type: 'normal', tag: 'Rates', iconEl: <MdBolt />, target: '/' }
-    ]
-  },
-  {
-    tag: 'Events',
-    linkList: [
-      { type: 'normal', tag: 'Delivery', iconEl: <MdBolt />, target: '/' },
-      {
-        type: 'dropDown', tag: 'Logistics', iconEl: <MdOutlineConstruction />, index: 1,
-        subList: [
-          { tag: 'Dispatch', target: '/posts' },
-          { tag: 'Warehouse', target: '/blog' }
-        ]
-      }
-    ]
-  },
-  {
-    tag: 'Rooms',
-    linkList: [
-      { type: 'normal', tag: 'Room Types', iconEl: <MdBolt />, target: '/admin/roomTypes' },
-      { type: 'normal', tag: 'Room Lists', iconEl: <MdBolt />, target: '/admin/rooms' },
-    ]
-  }
+  // {
+  //   tag: 'Guests',
+  //   linkList: [
+  //     { type: 'normal', tag: 'Check-Ins', iconEl: <MdBolt />, target: '/' },
+  //     { type: 'normal', tag: 'Payments', iconEl: <MdBolt />, target: '/' },
+  //     { type: 'normal', tag: 'Check-Outs', iconEl: <MdBolt />, target: '/' },
+  //   ]
+  // },
+  // {
+  //   tag: 'Rooms',
+  //   linkList: [
+  //     { type: 'normal', tag: 'Available Rooms', iconEl: <MdBolt />, target: '/' },
+  //     { type: 'normal', tag: 'Rates', iconEl: <MdBolt />, target: '/' }
+  //   ]
+  // },
+  // {
+  //   tag: 'Events',
+  //   linkList: [
+  //     { type: 'normal', tag: 'Delivery', iconEl: <MdBolt />, target: '/' },
+  //     {
+  //       type: 'dropDown', tag: 'Logistics', iconEl: <MdOutlineConstruction />, index: 1,
+  //       subList: [
+  //         { tag: 'Dispatch', target: '/posts' },
+  //         { tag: 'Warehouse', target: '/blog' }
+  //       ]
+  //     }
+  //   ]
+  // },
+  // {
+  //   tag: 'Rooms',
+  //   linkList: [
+  //     { type: 'normal', tag: 'Room Types', iconEl: <MdBolt />, target: '/admin/roomTypes' },
+  //     { type: 'normal', tag: 'Room Lists', iconEl: <MdBolt />, target: '/admin/rooms' },
+  //   ]
+  // }
 ]
 
 

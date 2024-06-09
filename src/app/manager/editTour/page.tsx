@@ -1,7 +1,7 @@
 'use client';
 import { fireStoreDB, storageDB } from "@/Firebase/base";
 import { useIsLoading } from "@/app/contexts/isLoadingContext";
-import { collection, doc, onSnapshot, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, query, setDoc, updateDoc, where } from "firebase/firestore";
 import flatpickr from "flatpickr";
 import 'flatpickr/dist/flatpickr.css';
 import { BaseOptions } from "flatpickr/dist/types/options";
@@ -17,58 +17,56 @@ import Image from "next/image";
 import gStyles from '../../viewTour/viewTour.module.css';
 import { MdAddAPhoto } from "react-icons/md";
 import { getDownloadURL, uploadBytes, ref as sRef } from "firebase/storage";
+import { useRouter } from "next/navigation";
 
 interface defType extends Record<string, any> { };
-const EditTour = ({ searchParams }: { searchParams: { tid: string } }) => {
-  const tid = searchParams.tid;
+const EditTour = ({ searchParams }: { searchParams: { tour: string } }) => {
+  const tour: defType = JSON.parse(searchParams.tour);
   const place = 'https://res.cloudinary.com/dvnemzw0z/image/upload/v1708045670/maqete/place_qlf6zd.jpg';
+  const router = useRouter();
 
   const { setIsLoading } = useIsLoading();
   const { setNotify } = useNotify();
 
-  // const [t]
-  const [destination, setDestination] = useState('');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(tour.description);
   // const [tourGuide, setTourGuide] = useState('');
-  const [category, setCategory] = useState('');
-  const [travelMode, setTravelMode] = useState('Air Travel');
+  const [category, setCategory] = useState(tour.category);
+  const [travelMode, setTravelMode] = useState(tour.travelMode);
 
-  const [startDate, setStartDate] = useState(0);
-  const [endDate, setEndDate] = useState(0);
+  const [startDate, setStartDate] = useState(tour.startDate);
+  const [endDate, setEndDate] = useState(tour.endDate);
 
-  const [accommodation, setAccommodation] = useState(0);
+  const [accommodation, setAccommodation] = useState(tour.accommodation);
 
-  const [price, setPrice] = useState(10);
+  const [price, setPrice] = useState(tour.price);
 
-  const [dayCount, setDayCount] = useState(1);
+  const [dayCount, setDayCount] = useState(getDuration(new Date(tour.startDate), new Date(tour.endDate)));
 
   const [checkInDate, setCheckInDate] = useState('');
   const checkInDateIn = useRef<HTMLInputElement>(null);
   const checkInTimeIn = useRef(null);
 
-  const [checkInDateVal, setCheckInDateVal] = useState(getRealDate(new Date().getTime()));
-  const [checkOutDateVal, setCheckOutDateVal] = useState(getRealDate(new Date().setDate(new Date().getDate() + 1)));
+  const [checkInDateVal, setCheckInDateVal] = useState(getRealDate(tour.startDate));
+  const [checkOutDateVal, setCheckOutDateVal] = useState(getRealDate(tour.endDate));
 
-  const [imagePreview, setImagePreview] = useState(place);
-  const [image, setImage] = useState<defType>({});
+  const [imagePreview, setImagePreview] = useState(tour.image.url);
+  const oldImage = tour.image.url;
+  const [image, setImage] = useState<defType>(tour.image);
   const [mediaSet, setMediaSet] = useState(Array(4).fill({ type: 'image', format: 'jpg' }));
-  const [mediaPreviewSet, setMediaPreviewSet] = useState<string[]>(Array(4).fill(place));
+  const [mediaPreviewSet, setMediaPreviewSet] = useState<string[]>(tour.mediaSet.map((el: defType) => el.url));
 
-  const [priority, setPriority] = useState(1);
+  const [priority, setPriority] = useState(tour.priority);
 
   const flatpickrInstance = useRef<flatpickr.Instance | null>(null);
 
   useEffect(() => {
-    // const docSnap = await getDoc(doc(fireStoreDB, 'Tours/' + tid));
-    // const tour: defType = { id: docSnap.id, ...docSnap.data() };
-
     const dateOptions: Partial<BaseOptions> = {
       altInput: false,
       mode: "range",
       altFormat: "J F, Y",
       dateFormat: "Y-m-d",
       minDate: "today",
-      defaultDate: [new Date(), new Date().setDate(new Date().getDate() + 1)],
+      defaultDate: [new Date(tour.startDate), new Date(tour.endDate)],
       onChange: (selectedDates: Date[]) => {
         const checkIn = selectedDates[0];
         const checkOut = selectedDates[1];
@@ -83,21 +81,12 @@ const EditTour = ({ searchParams }: { searchParams: { tid: string } }) => {
       flatpickr(checkInDateIn.current, dateOptions);
     }
 
-
-    const timeOptions = {
-      enableTime: true,
-      noCalendar: true,
-      dateFormat: "H:i",
-      defaultDate: new Date()
-    }
-
-
     setIsLoading(false);
-  }, [tid])
+  }, [tour, setIsLoading])
 
   const handleImage = (media: File) => {
-    if (media.size / 1000 > 5000) {
-      alert(`${media.size / 1000}kb File size exceeded, max of 5 mb`);
+    if (media.size / 1000 > 500) {
+      alert(`${media.size / 1000}kb File size exceeded, max of 500 kb`);
     } else {
       const imageData = {
         name: media.name,
@@ -132,7 +121,7 @@ const EditTour = ({ searchParams }: { searchParams: { tid: string } }) => {
     let set = null;
     const stamp = new Date().getTime();
     const objName = `${obj.name}${stamp}`;
-    await uploadBytes(sRef(storageDB, 'Tours/' + objName), obj.blob)
+    await uploadBytes(sRef(storageDB, 'MaqProducts/' + objName), obj.blob)
       .then((res) =>
         getDownloadURL(res.ref)
           .then((urlRes) => {
@@ -145,19 +134,24 @@ const EditTour = ({ searchParams }: { searchParams: { tid: string } }) => {
   }
 
   const uploadSet = (mediaSet: defType[]) => {
-    const uploadPromises = mediaSet.map((media) => {
+    const uploadPromises = mediaSet.map((media, i) => {
       if (media.blob) {
-        return uploadBytes(sRef(storageDB, 'Tours/' + media.name), media.blob)
+        return uploadBytes(sRef(storageDB, 'MaqProducts/' + media.name), media.blob)
           .then((res) => getDownloadURL(res.ref))
           .catch((error) => console.log(error))
       } else {
-        return Promise.resolve('empty');
+        if (mediaPreviewSet[i] === place) {
+          return Promise.resolve('empty');
+        } else {
+          return Promise.resolve(mediaPreviewSet[i]);
+        }
       }
     })
 
     return Promise.all(uploadPromises)
       .then((urls) => {
         urls.forEach((urlRes, i) => {
+          console.log(urlRes);
           if (urlRes) {
             mediaSet[i] = {
               ...mediaSet[i],
@@ -170,57 +164,47 @@ const EditTour = ({ searchParams }: { searchParams: { tid: string } }) => {
       });
   }
 
-  const resetDates = () => {
-    const defaultStartDate = new Date();
-    const defaultEndDate = new Date();
-    defaultEndDate.setDate(defaultEndDate.getDate() + 1);
-
-    setStartDate(defaultStartDate.getTime());
-    setEndDate(defaultEndDate.getTime());
-    setCheckInDateVal(getRealDate(defaultStartDate.getTime()));
-    setCheckOutDateVal(getRealDate(defaultEndDate.getTime()));
-    if (flatpickrInstance.current) {
-      flatpickrInstance.current.setDate([defaultStartDate, defaultEndDate], true);
-    }
-  };
-
-  const createTour = async () => {
+  const editTour = async () => {
     setIsLoading(true);
-    const imageUrl = await uploadObj(image);
-    if (imageUrl) {
-      await uploadSet(mediaSet)
-        .then(async () => {
-          await setDoc(doc(fireStoreDB, 'Tours/' + destination), {
-            description: description,
-            startDate: startDate,
-            endDate: endDate,
-            accommodation: 1,
-            category: category,
-            travelMode: travelMode,
-            price: price,
-            priority: priority,
-            status: 1,
-            image: image,
-            mediaSet: mediaSet,
-            views: 0,
-            ratings: [],
-            reviews: []
-          })
-        })
+
+    const edit = async () => {
+      await updateDoc(doc(fireStoreDB, 'Tours/' + tour.id), {
+        description: description,
+        startDate: startDate,
+        endDate: endDate,
+        accommodation: 1,
+        category: category,
+        travelMode: travelMode,
+        price: price,
+        priority: priority,
+        image: image,
+        mediaSet: mediaSet,
+      })
         .then(() => {
-          setIsLoading(false);
+          // setIsLoading(false);
           setCheckInDate('');
           setDayCount(1);
-          resetDates();
           resetForm();
-          setNotify(fixNote('pass', 'Tour Created Successfully'));
+          setNotify(fixNote('pass', 'Tour edited Successfully'));
+          router.back();
         })
         .catch((error) => console.log(error))
     }
+
+    if (imagePreview === oldImage) {
+      uploadSet(mediaSet)
+        .then(() => edit());
+    } else {
+      const imageUrl = await uploadObj(image);
+      if (imageUrl) {
+        uploadSet(mediaSet)
+          .then(() => edit());
+      }
+    }
   }
 
+
   const resetForm = () => {
-    setDestination('');
     setDescription('');
     setCategory('');
     setTravelMode('Air Travel');
@@ -235,14 +219,27 @@ const EditTour = ({ searchParams }: { searchParams: { tid: string } }) => {
     setPriority(1);
   }
 
+  const deleteTour = () => {
+    const confirmation = window.confirm(`Are you sure you want to delete ${tour.id}`);
+    if (confirmation) {
+      setIsLoading(true);
+      deleteDoc(doc(fireStoreDB, 'Tours/' + tour.id))
+        .then(() => router.back());
+    }
+  }
+
   return (
     <Panel>
       <section className={styles.formBox}>
-        {formHeader('Add Tour')}
-        <form onSubmit={(e) => { e.preventDefault(); createTour(); }} >
+        <header className={styles.formHeader}>
+          <h3>{'Add Tour'} <sub></sub></h3>
+
+          <legend onClick={deleteTour}>Delete</legend>
+        </header>
+        <form onSubmit={(e) => { e.preventDefault(); editTour(); }} >
           <p>
             <span>Destination</span>
-            <input type="text" value={destination} onChange={(e) => setDestination(e.target.value)} required />
+            <input type="text" value={tour.id} readOnly required />
           </p>
 
           <p>
@@ -301,14 +298,14 @@ const EditTour = ({ searchParams }: { searchParams: { tid: string } }) => {
 
           <p>
             <span>Price</span>
-            <input type="number" min={10} value={price} onChange={(e) => setPrice(Number(e.target.value))} required />
+            <input type="number" min={1} value={price} onChange={(e) => setPrice(Number(e.target.value))} required />
           </p>
 
           <section className={gStyles.gallery}>
             <article className={gStyles.left} style={{ border: '1px solid var(--primary)' }}>
               <Image alt='Add Image' className='cover' fill src={imagePreview} />
               <label htmlFor="addImage">
-                <input className="cover" type="file" id="addImage" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleImage(e.target.files![0])} required />
+                <input className="cover" type="file" id="addImage" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleImage(e.target.files![0])} />
                 <MdAddAPhoto className={styles.addPhoto} />
               </label>
             </article>

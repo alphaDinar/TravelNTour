@@ -46,7 +46,7 @@ export const UserContextProvider = ({ children }: userContextProviderProps) => {
     return () => {
       authStream();
     }
-  }, [])
+  }, [setIsLoading])
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

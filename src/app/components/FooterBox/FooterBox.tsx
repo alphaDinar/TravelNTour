@@ -85,6 +85,9 @@ const FooterBox = () => {
           <button>Send Now <MdOutlineSend /> </button>
         </form>
       </section>
+      <hr />
+
+      <Link href={'https://www.yotabyt.com/'} className={styles.yotaTag}>Powered By Yotabyt</Link>
     </section>
   );
 }

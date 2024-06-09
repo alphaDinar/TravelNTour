@@ -1,0 +1,81 @@
+.trends {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.trend {
+  /* width: 300px; */
+  display: grid;
+  gap: 1.3rem;
+  padding: 10px;
+  border-radius: 15px;
+  color: black;
+  border: 1px solid var(--theme);
+}
+
+.imgBox {
+  height: 240px;
+  position: relative;
+}
+
+.imgBox img {
+  border-radius: 10px;
+}
+
+
+.top,
+.mid,
+.low {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top p,
+.mid p,
+.low p {
+  display: flex;
+  flex-direction: column;
+}
+
+.top strong {
+  font-size: 1.1rem;
+}
+
+.top small,
+.mid small,
+.low small {
+  color: gray;
+}
+
+.top svg {
+  font-size: 2rem;
+}
+
+.mid svg {
+  color: var(--score);
+}
+
+.low legend {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.low a svg {
+  font-size: 2rem;
+  transition: 0.4s ease;
+  color: var(--theme);
+}
+
+.low a:hover svg {
+  rotate: 90deg;
+}
+
+@media all and (max-width:1250px) {
+  .trends {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}

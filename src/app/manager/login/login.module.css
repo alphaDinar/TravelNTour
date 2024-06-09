@@ -1,0 +1,54 @@
+.loginBox {
+  height: 100vh;
+  /* background: salmon; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--theme);
+}
+
+.loginBox form {
+  background: white;
+  border: 2px solid var(--theme);
+  padding: 20px;
+}
+
+
+.loginBox form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.loginBox form p {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.loginBox form p input {
+  padding: 8px;
+  width: 200px;
+  background: whitesmoke;
+}
+
+.loginBox form button {
+  background: var(--theme);
+  color: white;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+
+@media all and (max-width:500px) {
+
+  .loginBox form,
+  .loginBox form p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .loginBox form button {
+    width: calc(100% - 16px);
+  }
+
+}

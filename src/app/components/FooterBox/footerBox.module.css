@@ -100,6 +100,13 @@
   padding: 8px;
 }
 
+
+.yotaTag{
+  text-align: center;
+  color: #16BD6A;
+  cursor: pointer;
+}
+
 @media all and (max-width:750px) {
 
   .quickBox,

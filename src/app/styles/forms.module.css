@@ -16,6 +16,12 @@
   display: grid;
 }
 
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .formHeader h3 {
   font-size: 1.4rem;
 }
@@ -25,6 +31,14 @@
   height: 3px;
   width: 50px;
   background: black;
+}
+
+.formHeader legend {
+  padding: 8px;
+  background: tomato;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 .formBox form {

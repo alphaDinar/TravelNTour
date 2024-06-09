@@ -26,6 +26,15 @@ const StudentVisa = () => {
     "https://static1.s123-cdn-static-a.com/uploads/7452631/2000_6632efd575455.jpg"
   ]
 
+  const serviceList = [
+    { tag: "Visa Assistance", text: "Streamline your visa process with professional guidance and support.", img: "https://static1.s123-cdn-static-a.com/uploads/2031/400_5a15ab3119d59.jpg" },
+    { tag: "Application Guidance", text: "Our Application Guidance service provides personalized assistance and advice to help you navigate through the process of applying for various programs, schools, or jobs.", img: "https://static1.s123-cdn-static-a.com/uploads/2031/400_5a281d5cab608.jpg" },
+    { tag: "Scholarships Abroad", text: "We strive to make the process of searching and applying for international scholarships easier for students through our comprehensive database and expert advice.", img: "https://static1.s123-cdn-static-a.com/uploads/7452631/400_6632f2ddc7a6f.jpg" },
+    { tag: "University Enrolment", text: "With the university enrolment service, students can access academic advising, review degree requirements, and create a personalized course schedule.", img: "https://static1.s123-cdn-static-a.com/ready_uploads/media/8920913/400_637384cc009ad.jpg" },
+    { tag: "Visa consultation", text: "We offer comprehensive Visa consultation services to help individuals and businesses understand and fulfill the visa application requirements.", img: "https://static1.s123-cdn-static-a.com/ready_uploads/media/2692727/400_5e0a5ae9c1fb6.jpg" },
+    { tag: "Admissions advice", text: "Access comprehensive resources and tools to help you make informed decisions about your academic future.", img: "https://static1.s123-cdn-static-a.com/ready_uploads/media/2695097/400_5e05cd1631769.jpg" }
+  ]
+
   return (
     <main>
       <TopNav />
@@ -56,6 +65,11 @@ const StudentVisa = () => {
               <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
             </p>
 
+            <p>
+              <span>Message</span>
+              <textarea></textarea>
+            </p>
+
             <button>Contact Us</button>
           </form>
         </section>
@@ -64,9 +78,12 @@ const StudentVisa = () => {
         </section>
       </section>
 
-      <ExploreBox imgSet={imgSet} />
+      <ExploreBox
+        title={"Explore New Educational Horizons"}
+        smallTitle={"Expand your horizons with Pryme Travels. Study abroad and experience new cultures, languages, and opportunities."}
+        imgSet={imgSet} />
 
-      <ServiceBox />
+      <ServiceBox serviceList={serviceList} />
 
       <section>
         <section className={styles.bannerBox}>

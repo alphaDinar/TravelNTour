@@ -44,7 +44,13 @@
   gap: 0.3rem;
 }
 
-.formBox .left form input {
+.formBox .left form textarea {
+  resize: none;
+  height: 50px;
+}
+
+.formBox .left form input,
+.formBox .left form textarea {
   background: whitesmoke;
   padding: 5px;
   border-radius: 5px;
@@ -52,7 +58,8 @@
   transition: 0.3s ease;
 }
 
-.formBox .left form input:focus {
+.formBox .left form input:focus,
+.formBox .left form textarea:focus {
   border: 1px solid var(--theme);
 }
 
@@ -94,7 +101,7 @@
 }
 
 .bannerBox {
-  background: whitesmoke;
+  background: var(--theme);
 }
 
 .exploreBox,
@@ -152,9 +159,13 @@
   border-radius: 10px;
 }
 
-.serviceBox header strong,
-.bannerBox header strong {
+.serviceBox header strong {
   border-bottom: 4px solid var(--theme);
+}
+
+.bannerBox header strong {
+  color: white;
+  border-bottom: 4px solid white;
 }
 
 .serviceBox {
@@ -167,6 +178,7 @@
   align-items: center;
   gap: 1rem;
   background: var(--primary);
+  background: dodgerblue;
   padding: 10px;
   color: white;
   border-radius: 10px;
@@ -205,8 +217,10 @@
   gap: 0.3rem;
   flex-direction: column;
   text-align: center;
+  color: white;
 }
-.skill svg{
+
+.skill svg {
   color: var(--primary);
   font-size: 3rem;
 }
@@ -249,6 +263,7 @@
   .service {
     width: 250px;
   }
+
   .skills {
     flex-wrap: wrap;
   }
