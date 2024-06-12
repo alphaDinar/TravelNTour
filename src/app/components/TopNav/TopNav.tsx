@@ -64,7 +64,6 @@ const TopNav = () => {
               user ?
                 <>
                   <Link href={'/myTours'}>My Tours</Link>
-                  {/* <Link href={'/myTours'}>Favourites</Link> */}
                   {dropList.map((drop, i) => (
                     <a className={styles.drop} key={i}>
                       <span>{drop.tag} <RiArrowDropDownLine /> </span>
@@ -76,7 +75,6 @@ const TopNav = () => {
                     </a>
                   ))}
                   <p className={styles.socialBox}>
-                    <Link href={''}><FaWhatsapp /></Link>
                     <Link href={''}><FaFacebookF /></Link>
                     <Link href={''}><FaInstagram /></Link>
                   </p>
@@ -94,13 +92,12 @@ const TopNav = () => {
                     </a>
                   ))}
                   <Link href={'/'}>Contact Us</Link>
+                  <Link href={'/dubaiVisa'}>Dubai Visa</Link>
 
                   <p className={styles.socialBox}>
-                    <Link href={''}><FaWhatsapp /></Link>
                     <Link href={''}><FaFacebookF /></Link>
                     <Link href={''}><FaInstagram /></Link>
                   </p>
-
                 </>
           }
 

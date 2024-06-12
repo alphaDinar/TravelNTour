@@ -9,6 +9,11 @@ export const checkContact = (phoneCode: string, contact: string) => {
   return regex.test('+' + phoneCode + contact);
 }
 
+// export const checkFullContact = (phone: string) => {
+//   const regex = new RegExp("^" + '+233'.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "\\d{9}$");
+//   return regex.test(phone);
+// }
+
 export const checkEmail = (email: string) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);

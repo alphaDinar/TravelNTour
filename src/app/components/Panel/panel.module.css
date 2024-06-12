@@ -180,6 +180,17 @@
   align-items: flex-end;
 }
 
+.logout {
+  background: tomato;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
 .userBox {
   display: flex;
   align-items: center;

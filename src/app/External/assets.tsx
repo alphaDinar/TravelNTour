@@ -7,6 +7,7 @@ import logoTemp from '../../../public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 
+export const logoImg = logoTemp;
 export const logo = <Link href={'/'}> <Image alt='' src={logoTemp} width={70} height={60} className='contain' /></Link>;
 
 export const categoryList = [

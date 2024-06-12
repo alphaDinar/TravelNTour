@@ -29,7 +29,7 @@ const Tours = () => {
   return (
     <Panel>
       <section>
-        <h3>Tours</h3>
+        <h3 id="title">Tours</h3>
 
         <section className={styles.trends}>
           {tours.map((tour, i) => (

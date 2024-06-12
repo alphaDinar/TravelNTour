@@ -6,6 +6,7 @@ import { AuthTargetContextProvider } from "./contexts/authTargetContext";
 import { IsLoadingContextProvider } from "./contexts/isLoadingContext";
 import { NotifyContextProvider } from "./contexts/notifyContext";
 import { UserContextProvider } from "./contexts/userContext";
+import WhatsApp from "./components/WhatsApp/page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
               <NotifyContextProvider>
                 <UserContextProvider>
                   {children}
+                  <WhatsApp />
                 </UserContextProvider>
               </NotifyContextProvider>
             </IsLoadingContextProvider>

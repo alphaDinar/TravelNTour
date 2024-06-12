@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { BiMessageSquare } from "react-icons/bi";
 import { GoDot } from "react-icons/go";
 import { ImNotification } from "react-icons/im";
-import { MdOutlineMenu, MdOutlineNotifications, MdSearch } from "react-icons/md";
+import { MdOutlineMenu, MdOutlineNotifications, MdPowerSettingsNew, MdSearch } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Loading from "../Loading/Loading";
 import Notify from "../Notify/Notify";
@@ -23,7 +23,7 @@ type panelProps = {
 
 const Panel = ({ children }: panelProps) => {
   const router = useRouter();
-  const { isLoading } = useIsLoading();
+  const { isLoading, setIsLoading } = useIsLoading();
   const [isManager, setIsManager] = useState(false);
 
   const dropDown = <RiArrowDropDownLine className={styles.dropDown} />;
@@ -49,9 +49,11 @@ const Panel = ({ children }: panelProps) => {
 
   useEffect(() => {
     const authStream = onAuthStateChanged(fireAuth, (user) => {
+      setIsLoading(true);
       if (user) {
         if (user.email === 'pryme@manager.com') {
           setIsManager(true);
+          setIsLoading(false);
         } else {
           signOut(fireAuth)
             .then(() => router.push('/manager/login'));
@@ -62,7 +64,13 @@ const Panel = ({ children }: panelProps) => {
     })
 
     return () => authStream();
-  }, [router])
+  }, [router, setIsLoading])
+
+  const logoutUser = () => {
+    setIsLoading(true);
+    signOut(fireAuth)
+      .then(() => window.location.reload);
+  }
 
   return (
     <main className={styles.panel}>
@@ -99,6 +107,10 @@ const Panel = ({ children }: panelProps) => {
           <article className={styles.left}>
             <MdOutlineMenu onClick={toggleSidebar} className={styles.menuTab} />
             {/* <MdSearch /> */}
+          </article>
+
+          <article className={styles.right}>
+            <legend className={styles.logout} onClick={logoutUser}><MdPowerSettingsNew /> Logout</legend>
           </article>
           {/* <article className={styles.right}>
             <legend>

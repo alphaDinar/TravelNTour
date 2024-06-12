@@ -50,16 +50,24 @@
 }
 
 .formBox .left form input,
+.formBox .left form select,
 .formBox .left form textarea {
   background: whitesmoke;
-  padding: 5px;
+  padding: 8px 5px;
   border-radius: 5px;
   border: 1px solid whitesmoke;
   transition: 0.3s ease;
 }
 
+.formBox .left form input[type='file'] {
+  width: 0;
+  display: none;
+  height: 0;
+}
+
 .formBox .left form input:focus,
-.formBox .left form textarea:focus {
+.formBox .left form textarea:focus,
+.formBox .left form select:focus {
   border: 1px solid var(--theme);
 }
 
@@ -71,12 +79,71 @@
   border-top: 4px solid var(--theme);
 }
 
-.formBox .left form button {
+.formBox .left form button,
+.nextTab {
   background: var(--theme);
   padding: 8px;
   color: white;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
+}
+
+.formBox .left form .controlBox {
+  display: flex;
+  gap: 1rem;
+}
+
+
+.fileBox {
+  background: whitesmoke;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.fileLabel {
+  border: 2px dotted var(--primary);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fileLabel legend {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.fileLabel legend svg {
+  font-size: 1.2rem;
+}
+
+.nameBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgb(24, 220, 122);
+  border-radius: 40px;
+  padding: 2px 10px;
+  color: white;
+  margin-right: auto;
+  font-size: 0.8rem;
+}
+
+
+
+.nameBox svg {
+  color: rgb(24, 220, 122);
+  font-size: 1.3rem;
+  color: white;
+}
+
+.previewBox {
+  height: 200px;
+  background: salmon;
 }
 
 .formBox .right {
@@ -86,6 +153,30 @@
 
 .formBox .right img {
   border-radius: 20px;
+}
+
+.promptBox {
+  background: tomato;
+  padding: 5px;
+  color: white;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.promptBox legend {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.promptBox span {
+  font-size: 1.1rem;
+}
+
+.promptBox small {
+  color: white;
+  font-size: 0.9rem;
+  /* color: white !important; */
 }
 
 .exploreBox,
@@ -229,6 +320,54 @@
   font-size: 2rem;
 }
 
+
+.faqBox {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.faqBox h3 {
+  padding: 10px;
+  border-bottom: 3px solid var(--theme);
+}
+
+.faqs {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+}
+
+.faq {
+  border: 1px solid lightgray;
+  padding: 10px;
+  border-radius: 5px;
+  background: whitesmoke;
+  display: grid;
+  gap: 1rem;
+}
+
+.faq strong {
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.faq strong svg {
+  font-size: 1.2rem;
+}
+
+.faq article {
+  display: grid;
+  gap: 1rem;
+}
+
+.faq article ul {
+  display: grid;
+  gap: 0.3rem;
+}
 
 
 @media all and (max-width:1100px) {

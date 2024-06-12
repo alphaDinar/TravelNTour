@@ -1,0 +1,142 @@
+.tag {
+  background: #25D366;
+  color: white;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  padding: 0.3rem;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.tag svg {
+  font-size: 2rem;
+}
+
+
+.box {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+
+.chatBox {
+  position: absolute;
+  width: 350px;
+  background: white;
+  bottom: 4.5rem;
+  right: -380px;
+  border-radius: 20px;
+  display: grid;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: 0.3s ease;
+}
+
+.chatBox.change {
+  right: 0;
+}
+
+.chatBox header {
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chatBox header svg {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.chatBox header article {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.chatBox header article p {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatBox header article p strong {
+  font-size: 1.3rem;
+}
+
+.chatBox header article p small {
+  color: gray;
+}
+
+
+.chatBox div {
+  padding: 20px;
+  background-image: url("https://res.cloudinary.com/dvnemzw0z/image/upload/v1717902127/Perisseuobrands/7c2929ff41f2406df117969a5bf46bf7_okmds1.jpg");
+  background-position: center;
+  background-size: cover;
+  border-radius: 0 0 20px 20px;
+  display: grid;
+  gap: 1rem;
+}
+
+.chatBox div article {
+  width: 70%;
+  margin-left: 20px;
+  position: relative;
+  background: white;
+  display: grid;
+  gap: 0.2rem;
+  padding: 15px;
+  border-radius: 0 20px 20px 20px;
+}
+
+.chatBox div article sub {
+  position: absolute;
+  top: 0;
+  left: -19px;
+  display: block;
+  width: 20px;
+  height: 23px;
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  background: black;
+  background: white;
+  border-radius: 5px 0 0 5px;
+}
+
+.chatBox div article textarea {
+  resize: none;
+  height: 40px;
+}
+
+.chatBox div a {
+  background: #25D366;
+  color: white;
+  margin-left: auto;
+  padding: 6px 15px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+@media all and (max-width:500px) {
+  .chatBox {
+    width: 90vw;
+    background: rgba(0, 0, 0, 0.468);
+    background: white;
+    bottom: 4.5rem;
+    right: -100vw;
+    border-radius: 20px;
+    display: grid;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: 0.3s ease;
+  }
+
+  .chatBox.change {
+    right: calc(5vw - 20px);
+  }
+}
