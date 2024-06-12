@@ -488,7 +488,7 @@ const StudentVisa = () => {
 
       {/* <section> */}
       <section className={styles.faqBox} id='hor'>
-        <h3>UAE..VISA..F.A.Q {activeFAQ} </h3>
+        <h3>UAE..VISA..F.A.Q</h3>
 
         <section className={styles.faqs}>
           {faqList.map((faq, i) => (
