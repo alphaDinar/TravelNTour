@@ -80,13 +80,13 @@ export const targetList = [
       { type: 'normal', tag: 'Tours', iconEl: <GiOasis />, target: '/manager' },
       { type: 'normal', tag: 'Add Tour', iconEl: <TbBeach />, target: '/manager/addTour' },
       { type: 'normal', tag: 'Booked Trips', iconEl: <GiMoneyStack />, target: '/manager/trips' },
-      {
-        type: 'dropDown', tag: 'Dropped', iconEl: <MdOutlineConstruction />, index: 0,
-        subList: [
-          { tag: 'Posts', target: '/posts' },
-          { tag: 'Blog', target: '/blog' }
-        ]
-      }
+      // {
+      //   type: 'dropDown', tag: 'Dropped', iconEl: <MdOutlineConstruction />, index: 0,
+      //   subList: [
+      //     { tag: 'Posts', target: '/posts' },
+      //     { tag: 'Blog', target: '/blog' }
+      //   ]
+      // }
     ]
   },
   // {
