@@ -21,3 +21,5 @@ export const travelModeList = [
   { tag: 'Land Travel', iconEl: <IoBusOutline /> },
   { tag: 'Water Travel', iconEl: <MdOutlineDirectionsBoatFilled /> }
 ]
+
+export const cashSymbol = 'USD';

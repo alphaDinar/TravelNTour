@@ -1,34 +1,21 @@
-'use client';
-import { useEffect, useState } from "react";
 import styles from './tours.module.css';
 import Panel from "../components/Panel/Panel";
-import { useIsLoading } from "../contexts/isLoadingContext";
-import { collection, doc, getDocs, onSnapshot, orderBy, query, where } from 'firebase/firestore';
-import { fireAuth, fireStoreDB } from '@/Firebase/base';
+import { collection, getDocs } from 'firebase/firestore';
+import { fireStoreDB } from '@/Firebase/base';
 import { getDaysLeft, getRealDate } from "../External/time";
 import { FaRegClock, FaStar } from "react-icons/fa";
 import { MdEdit, MdOutlineFavoriteBorder } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
+import { cashSymbol } from '../External/assets';
 
 interface defType extends Record<string, any> { };
-const Tours = () => {
-  const { setIsLoading } = useIsLoading();
-  const [tours, setTours] = useState<defType[]>([]);
-
-  useEffect(() => {
-    const toursRef = collection(fireStoreDB, 'Tours/');
-    const tourStream = onSnapshot(toursRef, (snapshot) => {
-      // setAllTours(snapshot.docs.map((tour) => ({ id: tour.id, ...tour.data() })));
-      setTours(snapshot.docs.map((tour) => ({ id: tour.id, ...tour.data() })));
-      setIsLoading(false);
-    });
-    return () => tourStream();
-  }, [setIsLoading])
+const Tours = async () => {
+  const tours: defType[] = (await getDocs(collection(fireStoreDB, 'Tours/'))).docs.map((el) => ({ id: el.id, ...el.data() }));
 
   return (
     <Panel>
-      <section>
+      <section id="managerPage">
         <h3 id="title">Tours</h3>
 
         <section className={styles.trends}>
@@ -46,7 +33,7 @@ const Tours = () => {
               </div>
               <div className={styles.mid}>
                 <p>
-                  <strong>GHS {tour.price.toLocaleString()} </strong>
+                  <strong>{cashSymbol} {tour.price.toLocaleString()} </strong>
                   <small>Price</small>
                 </p>
                 <p id='temp'>

@@ -90,9 +90,11 @@
     align-items: center;
     gap: 1.5vh;
   }
-  .tours{
+
+  .tours {
     width: 100%;
   }
+
   .tour {
     height: revert;
     display: flex;
@@ -111,4 +113,25 @@
   .priceBox {
     align-items: center;
   }
+}
+
+
+
+
+.filterBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.filterBox article {
+  display: flex;
+  flex-direction: column;
+  background: whitesmoke;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.filterBox article select {
+  background: whitesmoke;
 }

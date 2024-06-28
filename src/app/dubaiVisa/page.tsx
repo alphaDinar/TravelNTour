@@ -15,6 +15,8 @@ import { VscDebugBreakpointLogUnverified } from "react-icons/vsc";
 import { MdArrowDropDownCircle, MdOutlineControlPoint, MdOutlineTaskAlt, MdTaskAlt, MdTimer } from "react-icons/md";
 import { checkContact } from "../External/auth";
 import { IoIosArrowDropdown } from "react-icons/io";
+import { doc, setDoc } from "firebase/firestore";
+import { fireStoreDB } from "@/Firebase/base";
 // import { checkFullContact } from "../External/auth";
 
 const StudentVisa = () => {
@@ -44,6 +46,7 @@ const StudentVisa = () => {
 
   const [activeFAQ, setActiveFAQ] = useState(-1);
 
+  const [formLoading, setFormLoading] = useState(false);
 
   const channelList = ["Call", "WhatsApp", 'Email', "Botim", "Other"];
   const processingList = [
@@ -133,7 +136,34 @@ const StudentVisa = () => {
       setFormStep(3)
     }
     else if (formStep === 3) {
-      alert('submitting');
+      const createApplication = async () => {
+        const stamp = new Date().getTime();
+        const aid = `aid${stamp}`;
+        await setDoc(doc(fireStoreDB, 'Applications/' + aid), {
+          firstName: firstName,
+          secondName: secondName,
+          passportNumber: passportNumber,
+          gender: gender,
+          nationality: nationality,
+          email: email,
+          phone: phone,
+          channel: channel,
+          // passport scanned media
+          purpose: purpose,
+          processing: processing,
+          visaType: visaType,
+          dateOfTravel: dateOfTravel,
+          returnDate: returnDate,
+          // bankPay slip media
+          timestamp: stamp
+        })
+        .then(()=>{
+          alert('sent');
+          window.location.reload();
+        })
+      }
+      setFormLoading(true);
+      createApplication();
     }
   }
 
@@ -405,7 +435,12 @@ const StudentVisa = () => {
 
                     <nav className={styles.controlBox}>
                       <legend className={styles.nextTab} onClick={handleFormPrev}>Previous</legend>
-                      <button className={styles.nextTab}>Continue</button>
+
+                      {formLoading ?
+                        <button className={styles.nextTab}>Continue</button>
+                        :
+                        <button className={'miniLoader'}>Continue</button>
+                      }
                     </nav>
                   </>
             }

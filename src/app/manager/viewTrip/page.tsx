@@ -6,9 +6,10 @@ import { getDaysLeft, getRealDate } from "@/app/External/time";
 import { MdMail, MdOutlineModeOfTravel, MdPhone, MdStarOutline, MdTaskAlt } from 'react-icons/md';
 import { LiaAwardSolid } from 'react-icons/lia';
 import { RiHomeHeartLine } from 'react-icons/ri';
-import { categoryList } from '@/app/External/assets';
+import { cashSymbol, categoryList } from '@/app/External/assets';
 import { useEffect } from 'react';
 import { useIsLoading } from '@/app/contexts/isLoadingContext';
+import Link from 'next/link';
 
 interface defType extends Record<string, any> { };
 const Tours = ({ searchParams }: { searchParams: { tour: string, contact: string, email: string } }) => {
@@ -25,16 +26,15 @@ const Tours = ({ searchParams }: { searchParams: { tour: string, contact: string
 
   return (
     <Panel>
-      <section>
-        <h3>Trips</h3>
-
+      <section id='managerPage'>
         <section className={styles.tourBox}>
           <header>
             <h3>{tour.id}</h3>
 
             <p>
-              <legend>{contact} <MdPhone /> </legend>
-              <legend>{email} <MdMail /> </legend>
+
+              {contact && <legend>{contact} <MdPhone /> </legend>}
+              {email && <Link href={`mailto:${email}`}><legend>{email} <MdMail /> </legend></Link>}
             </p>
           </header>
 
@@ -133,7 +133,14 @@ const Tours = ({ searchParams }: { searchParams: { tour: string, contact: string
 
                 <sub>{getDaysLeft(tour.startDate)}</sub>
                 <hr />
-                <h3>GHS {tour.price.toLocaleString()}</h3>
+                <h3>{cashSymbol} {tour.price.toLocaleString()}</h3>
+
+
+                {!tour.payStatus ?
+                  <span style={{ background: 'tomato', padding: '10px', color: 'wheat', borderRadius: '5px' }}>Not Paid</span>
+                  :
+                  <span style={{ background: 'springgreen', padding: '10px', color: 'white', borderRadius: '5px' }}>Paid</span>
+                }
 
               </section>
             </section>

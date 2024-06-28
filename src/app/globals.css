@@ -51,6 +51,20 @@ main {
   visibility: hidden;
 }
 
+#managerPage {
+  display: grid;
+  gap: 4vh;
+  background: white;
+  box-shadow: var(--shadow1);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+#managerPage h3{
+  border-bottom: 3px solid var(--bg);
+  width: max-content;
+}
+
 #pageBox {
   gap: 3.5vh;
 }

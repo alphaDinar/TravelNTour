@@ -1,6 +1,6 @@
 // import Lottie from 'lottie-react';
 // import itemLoaderRef from '../../public/itemLoader.json';
-import { MdArrowBack, MdOutlineAssignment, MdOutlineNotifications, MdOutlinePayment, MdOutlineSupportAgent } from 'react-icons/md';
+import { MdArrowBack, MdOutlineAssignment, MdOutlineNotifications, MdOutlinePayment, MdOutlineSupportAgent, MdOutlineWorkHistory } from 'react-icons/md';
 import { CiWallet } from 'react-icons/ci';
 import { RiCoupon3Line } from 'react-icons/ri';
 import { GoReport } from 'react-icons/go';
@@ -70,6 +70,7 @@ export const countryList = [
 import { MdBolt, MdOutlineConstruction, MdOutlineGroupAdd } from "react-icons/md";
 import { TbBeach } from 'react-icons/tb';
 import { GiMoneyStack, GiOasis } from 'react-icons/gi';
+import { IoDocumentAttachOutline } from 'react-icons/io5';
 
 
 export const targetList = [
@@ -89,14 +90,14 @@ export const targetList = [
       }
     ]
   },
-  // {
-  //   tag: 'Guests',
-  //   linkList: [
-  //     { type: 'normal', tag: 'Check-Ins', iconEl: <MdBolt />, target: '/' },
-  //     { type: 'normal', tag: 'Payments', iconEl: <MdBolt />, target: '/' },
-  //     { type: 'normal', tag: 'Check-Outs', iconEl: <MdBolt />, target: '/' },
-  //   ]
-  // },
+  {
+    tag: 'Visa',
+    linkList: [
+      { type: 'normal', tag: 'Applications', iconEl: <IoDocumentAttachOutline />, target: '/manager/applications' },
+      { type: 'normal', tag: 'Completed', iconEl: <MdOutlineWorkHistory />, target: '/manager/applicationHistory' },
+      // { type: 'normal', tag: 'Check-Outs', iconEl: <MdBolt />, target: '/' },
+    ]
+  },
   // {
   //   tag: 'Rooms',
   //   linkList: [
