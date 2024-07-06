@@ -104,10 +104,11 @@
   cursor: pointer;
 }
 
-.socialBox{
+.socialBox {
   display: flex;
   gap: 0.5rem;
 }
+
 .socialBox svg {
   color: var(--theme);
   font-size: 1.5rem;
@@ -138,8 +139,52 @@
 }
 
 
+.currencyBox {
+  position: relative;
+  z-index: 100;
+  background: white;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border: 1px solid white;
+}
 
-@media all and (max-width:650px) {
+.currencyBox:hover ul {
+  display: grid;
+}
+
+.currencyBox ul {
+  position: absolute;
+  display: none;
+  left: 0;
+  background: white;
+  border: 1px solid var(--theme);
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.currencyBox p {
+  border-bottom: 1px solid var(--theme);
+}
+
+.currencyBox ul li,
+.currencyBox p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.currencyBox span {
+  font-size: 0.9rem;
+}
+
+.currencyBox ul li:hover {
+  background: var(--theme);
+  color: white;
+}
+
+@media all and (max-width:1050px) {
   .topNav {
     justify-content: center;
     flex-direction: column;
@@ -179,6 +224,11 @@
 
   .left nav.change {
     right: 0;
+  }
+
+  .right{
+    gap: 0.5rem;
+    flex-direction: column-reverse;
   }
 
   .menuTab {

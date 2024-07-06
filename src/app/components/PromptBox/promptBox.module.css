@@ -1,0 +1,28 @@
+.prompt {
+  position: fixed;
+  top: 5vh;
+  left: 50%;
+  background: var(--pass);
+  color: white;
+  transform: translateX(-50%) translateY(0);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  max-width: 200px;
+  width: max-content;
+  cursor: pointer;
+  transition: 0.4s ease;
+  opacity: 1;
+  text-align: center;
+  z-index: 3000;
+}
+
+.prompt.hidden {
+  top: 0;
+  transform: translateX(-50%) translateY(-100%);
+}

@@ -82,7 +82,7 @@
 .formBox .left form button,
 .nextTab {
   background: var(--theme);
-  padding: 8px;
+  padding: 12px 10px;
   color: white;
   border-radius: 5px;
   cursor: pointer;

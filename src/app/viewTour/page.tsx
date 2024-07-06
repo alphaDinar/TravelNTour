@@ -8,9 +8,10 @@ import TopNav from '../components/TopNav/TopNav';
 import styles from './viewTour.module.css';
 import { doc, getDoc } from 'firebase/firestore';
 import { fireStoreDB } from '@/Firebase/base';
-import { categoryList } from '../External/assets';
+import { cashSymbol, categoryList } from '../External/assets';
 import { getRealDate } from '../External/time';
 import PaymentTab from './PaymentTab';
+import PriceTag from '../components/PriceTag/PriceTag';
 
 interface defType extends Record<string, any> { };
 const ViewTour = async ({ searchParams }: { searchParams: { tid: string } }) => {
@@ -126,7 +127,7 @@ const ViewTour = async ({ searchParams }: { searchParams: { tid: string } }) => 
 
               <hr />
 
-              <h3>GHS {tour.price.toLocaleString()}</h3>
+              <h3><PriceTag amount={tour.price} /></h3>
               <hr />
 
               <PaymentTab tour={tour} />

@@ -14,6 +14,7 @@ import { FaRegClock, FaStar } from 'react-icons/fa';
 import { sortByViews } from '@/app/External/sort';
 import { getDaysLeft, getRealDate } from '@/app/External/time';
 import { cashSymbol } from '@/app/External/assets';
+import PriceTag from '@/app/components/PriceTag/PriceTag';
 
 
 interface defType extends Record<string, any> { };
@@ -70,7 +71,7 @@ const TrendingBox: FC<TrendingBoxProps> = ({ tours }) => {
               </div>
               <div className={styles.mid}>
                 <p>
-                  <strong>{cashSymbol} {tour.price.toLocaleString()} </strong>
+                  <strong><PriceTag amount={tour.price} /> </strong>
                   <small>Price</small>
                 </p>
                 <p id='temp'>

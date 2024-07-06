@@ -17,6 +17,15 @@
   scroll-behavior: smooth;
 }
 
+#paymentForm{
+  gap: 1rem;
+  display: grid;
+  padding: 30px;
+}
+input{
+  padding: 10px;
+}
+
 :root {
   --bg: #232323;
   --theme: rgb(19, 218, 119);
@@ -172,18 +181,22 @@ li {
 
 #cut {
   -webkit-line-clamp: 1;
+  line-clamp : 1;
 }
 
 #cut2 {
   -webkit-line-clamp: 2;
+  line-clamp : 2;
 }
 
 #cut3 {
   -webkit-line-clamp: 3;
+  line-clamp : 3;
 }
 
 #cut6 {
   -webkit-line-clamp: 4;
+  line-clamp : 4;
 }
 
 

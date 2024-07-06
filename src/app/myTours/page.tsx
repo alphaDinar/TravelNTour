@@ -12,6 +12,8 @@ import { fireStoreDB } from '@/Firebase/base';
 import { useUser } from '../contexts/userContext';
 import { useEffect, useState } from 'react';
 import { getDaysLeft, getRealDate } from '../External/time';
+import { cashSymbol } from '../External/assets';
+import PriceTag from '../components/PriceTag/PriceTag';
 
 interface defType extends Record<string, any> { };
 const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string, reference: string } }) => {
@@ -84,7 +86,7 @@ const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string
 
                 <div className={styles.priceBox}>
                   <sub style={trip.payStatus ? { background: 'springgreen' } : { background: 'tomato' }}></sub>
-                  <h4 className='big'>GHS {trip.price.toLocaleString()}</h4>
+                  <h4 className='big'><PriceTag amount={trip.price} /></h4>
                   <MdEast />
                 </div>
               </Link>
@@ -112,7 +114,7 @@ const MyTours = ({ searchParams }: { searchParams: { tid: string, trxref: string
                 </article>
 
                 <div className={styles.priceBox}>
-                  <h4 className='big'>GHS 3,500</h4>
+                  <h4 className='big'>{cashSymbol} 3,500</h4>
                   <MdEast />
                 </div>
               </Link>

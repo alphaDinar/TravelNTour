@@ -1,0 +1,30 @@
+.appBox,
+.appBox article {
+  display: grid;
+  cursor: pointer;
+}
+
+.appBox {
+  gap: 1.5rem;
+}
+
+.appBox article {
+  gap: 0.3rem;
+}
+
+.appBox article p {
+  border: 1px solid var(--theme);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.appBox hr {
+  border-top: 4px solid var(--primary);
+  border-radius: 40px;
+}
+
+.appBox legend {
+  border: 2px solid black;
+  height: 200px;
+  position: relative;
+}

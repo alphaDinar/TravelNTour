@@ -12,11 +12,14 @@ import { logo } from '@/app/External/assets';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { useWinSize } from '@/app/contexts/winSizeContext';
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import CurrencyBox from './CurrencyBox';
+import { useExchangeRate } from '@/app/contexts/exchangeRateContext';
 
 interface defType extends Record<string, any> { };
 const TopNav = () => {
   const { user } = useUser();
   const { winSize } = useWinSize();
+  const { exchangeRate } = useExchangeRate();
 
   const [navToggled, setNavToggled] = useState(false);
   const { isLoading } = useIsLoading();
@@ -101,13 +104,8 @@ const TopNav = () => {
                 </>
           }
 
-          {dropList.map((drop, i) => (
-            drop.items.map((dropChild, ii) => (
-              <Link key={ii} href={dropChild.target} style={winSize < 650 ? { display: `${dropChild.display}` } : { display: 'none' }} >{dropChild.show}</Link>
-            ))
-          ))}
+
           <Link href={'/login'} className={styles.hide}>Login</Link>
-          {/* <Link href={'/'} className={styles.hide}>Register</Link> */}
           <MdMenu className={styles.menuTab} onClick={toggleNav} />
         </nav>
       </section>
@@ -122,11 +120,13 @@ const TopNav = () => {
             :
             user ?
               <>
+                <CurrencyBox />
                 <Link href={'/'} className={styles.registerTab}>{user.tourist.username}</Link>
                 <legend className={styles.registerTab} onClick={logoutUser} style={{ background: 'var(--red)' }}><MdOutlinePowerSettingsNew /></legend>
               </>
               :
               <>
+                <CurrencyBox />
                 <Link href={'/login'} className={styles.show}>Login</Link>
                 <Link href={'/register'} className={styles.registerTab}>Get Started</Link>
               </>

@@ -1,25 +1,27 @@
 'use client';
 import TopNav from "../components/TopNav/TopNav";
 import styles from '../styles/visa.module.css';
-import student from '../../../public/student.webp';
-import Image from "next/image";
 import { useState } from "react";
-import ExploreBox from "../components/Visa/ExploreBox";
-import ServiceBox from "../components/Visa/ServiceBox";
 import { FaPeopleGroup } from "react-icons/fa6";
 import FooterBox from "../components/FooterBox/FooterBox";
-import { GiHealthIncrease } from "react-icons/gi";
-import { IoBriefcaseOutline, IoCloudUploadOutline, IoHappyOutline } from "react-icons/io5";
-import { TiWorldOutline } from "react-icons/ti";
+import { IoBriefcaseOutline, IoCloudUploadOutline } from "react-icons/io5";
 import { VscDebugBreakpointLogUnverified } from "react-icons/vsc";
-import { MdArrowDropDownCircle, MdOutlineControlPoint, MdOutlineTaskAlt, MdTaskAlt, MdTimer } from "react-icons/md";
+import { MdOutlineControlPoint, MdOutlineTaskAlt, MdTaskAlt, MdTimer } from "react-icons/md";
 import { checkContact } from "../External/auth";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { doc, setDoc } from "firebase/firestore";
-import { fireStoreDB } from "@/Firebase/base";
+import { fireStoreDB, storageDB } from "@/Firebase/base";
+import { fixPrompt } from '../External/forms';
+import { usePrompt } from "../contexts/promptContext";
+import PromptBox from "../components/PromptBox/PromptBox";
+import { getDownloadURL, uploadBytes, ref as sRef } from "firebase/storage";
 // import { checkFullContact } from "../External/auth";
 
+
+interface defType extends Record<string, any> { };
 const StudentVisa = () => {
+  const { setPrompt } = usePrompt();
+
   const [formStep, setFormStep] = useState(0);
   const [firstName, setFirstName] = useState('');
   const [secondName, setSecondName] = useState('');
@@ -43,6 +45,8 @@ const StudentVisa = () => {
 
   const [bankPaymentSlip, setBankPaymentSlip] = useState<File | null>(null);
   const [momoShot, setMomoShot] = useState<File | null>(null);
+
+  const [mediaSet, setMediaSet] = useState<defType[]>([]);
 
   const [activeFAQ, setActiveFAQ] = useState(-1);
 
@@ -119,7 +123,34 @@ const StudentVisa = () => {
   const point = <VscDebugBreakpointLogUnverified />;
 
 
-  const handleFormNext = () => {
+  const uploadSet = (mediaSet: defType[]) => {
+    const uploadPromises = mediaSet.map((media) => {
+      if (media.file) {
+        const stamp = `${media.tag}${new Date().getTime()}`;
+        return uploadBytes(sRef(storageDB, 'Visas/' + stamp), media.file)
+          .then((res) => getDownloadURL(res.ref))
+          .catch((error) => console.log(error))
+      } else {
+        return Promise.resolve('empty');
+      }
+    })
+
+    return Promise.all(uploadPromises)
+      .then((urls) => {
+        urls.forEach((urlRes, i) => {
+          if (urlRes) {
+            mediaSet[i] = {
+              ...mediaSet[i],
+              url: urlRes
+            }
+            delete mediaSet[i].file;
+          }
+        });
+        return mediaSet;
+      });
+  }
+
+  const handleFormNext = async () => {
     if (formStep === 0) {
       if (checkContact(phone.slice(0, 3), phone.slice(3))) {
         setFormStep(1);
@@ -136,7 +167,7 @@ const StudentVisa = () => {
       setFormStep(3)
     }
     else if (formStep === 3) {
-      const createApplication = async () => {
+      const createApplication = async (finalMediaSet: defType[]) => {
         const stamp = new Date().getTime();
         const aid = `aid${stamp}`;
         await setDoc(doc(fireStoreDB, 'Applications/' + aid), {
@@ -148,22 +179,24 @@ const StudentVisa = () => {
           email: email,
           phone: phone,
           channel: channel,
-          // passport scanned media
           purpose: purpose,
           processing: processing,
           visaType: visaType,
           dateOfTravel: dateOfTravel,
           returnDate: returnDate,
-          // bankPay slip media
+          mediaSet: finalMediaSet,
           timestamp: stamp
         })
-        .then(()=>{
-          alert('sent');
-          window.location.reload();
-        })
+          .then(() => {
+            setPrompt(fixPrompt('pass', 'Submitted'));
+            window.location.reload();
+          })
       }
       setFormLoading(true);
-      createApplication();
+      uploadSet(mediaSet)
+        .then((finalMediaSet) => {
+          createApplication(finalMediaSet);
+        })
     }
   }
 
@@ -175,34 +208,174 @@ const StudentVisa = () => {
     event.preventDefault();
   }
 
-  const handlePassportImageScannedDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setPassportImageScanned(event.dataTransfer.files[0])
+  const handlePassportImageScannedDrop = (event: React.DragEvent<HTMLDivElement> | React.ChangeEvent<HTMLInputElement>) => {
+    let file: File | undefined;
+    if ('dataTransfer' in event) {
+      event.preventDefault();
+      file = event.dataTransfer.files[0];
+    } else if ('target' in event) {
+      file = event.target.files?.[0];
+    }
+
+    if (file) {
+      if (file.size / 1000 > 2000 || file.type !== 'application/pdf') {
+        setPrompt(fixPrompt('fail', 'Max Size : 2mb\n Accepted Format : PDF'));
+      } else {
+        console.log(file.type)
+
+        const tag = 'passportImageScanned';
+        const id = 'Passport Picture (Scanned)';
+        setPassportImageScanned(file)
+        const mediaSetTemp = mediaSet.filter((media) => media.tag !== tag);
+        const newMedia = {
+          tag: tag,
+          id: id,
+          file: file
+        };
+        const updatedMediaSet = mediaSetTemp.concat(newMedia);
+        setMediaSet(updatedMediaSet);
+      }
+    }
   }
 
-  const handlePassportImageWhiteDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setPassportImageWhite(event.dataTransfer.files[0])
+  const handlePassportImageWhiteDrop = (event: React.DragEvent<HTMLDivElement> | React.ChangeEvent<HTMLInputElement>) => {
+    let file: File | undefined;
+    if ('dataTransfer' in event) {
+      event.preventDefault();
+      file = event.dataTransfer.files[0];
+    } else if ('target' in event) {
+      file = event.target.files?.[0];
+    }
+
+    if (file) {
+      if (file.size / 1000 > 2000 || file.type !== 'application/pdf') {
+        setPrompt(fixPrompt('fail', 'Max Size : 2mb\n Accepted Format : PDF'));
+      } else {
+        const tag = 'passportImageWhite';
+        const id = 'Passport Picture (White Background)';
+        setPassportImageWhite(file)
+        const mediaSetTemp = mediaSet.filter((media) => media.tag !== tag);
+        const newMedia = {
+          tag: tag,
+          id: id,
+          file: file
+        };
+        const updatedMediaSet = mediaSetTemp.concat(newMedia);
+        setMediaSet(updatedMediaSet);
+      }
+    }
   }
 
-  const handleBankStatementDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setBankStatement(event.dataTransfer.files[0])
+  const handleBankStatementDrop = (event: React.DragEvent<HTMLDivElement> | React.ChangeEvent<HTMLInputElement>) => {
+    let file: File | undefined;
+    if ('dataTransfer' in event) {
+      event.preventDefault();
+      file = event.dataTransfer.files[0];
+    } else if ('target' in event) {
+      file = event.target.files?.[0];
+    }
+
+    if (file) {
+      if (file.size / 1000 > 2000 || file.type !== 'application/pdf') {
+        setPrompt(fixPrompt('fail', 'Max Size : 2mb\n Accepted Format : PDF'));
+      } else {
+        const tag = 'bankStatement';
+        const id = 'Bank Statement';
+        setBankStatement(file)
+        const mediaSetTemp = mediaSet.filter((media) => media.tag !== tag);
+        const newMedia = {
+          tag: tag,
+          id: id,
+          file: file
+        };
+        const updatedMediaSet = mediaSetTemp.concat(newMedia);
+        setMediaSet(updatedMediaSet);
+      }
+    }
   }
 
-  const handleResidenceDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setResidence(event.dataTransfer.files[0])
+  const handleResidenceDrop = (event: React.DragEvent<HTMLDivElement> | React.ChangeEvent<HTMLInputElement>) => {
+    let file: File | undefined;
+    if ('dataTransfer' in event) {
+      event.preventDefault();
+      file = event.dataTransfer.files[0];
+    } else if ('target' in event) {
+      file = event.target.files?.[0];
+    }
+
+    if (file) {
+      if (file.size / 1000 > 2000 || file.type !== 'application/pdf') {
+        setPrompt(fixPrompt('fail', 'Max Size : 2mb\n Accepted Format : PDF'));
+      } else {
+        const tag = 'residence';
+        const id = 'Residence';
+        setResidence(file)
+        const mediaSetTemp = mediaSet.filter((media) => media.tag !== tag);
+        const newMedia = {
+          tag: tag,
+          id: id,
+          file: file
+        };
+        const updatedMediaSet = mediaSetTemp.concat(newMedia);
+        setMediaSet(updatedMediaSet);
+      }
+    }
   }
 
-  const handleBankPaymentSlipDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setBankPaymentSlip(event.dataTransfer.files[0])
+  const handleBankPaymentSlipDrop = (event: React.DragEvent<HTMLDivElement> | React.ChangeEvent<HTMLInputElement>) => {
+    let file: File | undefined;
+    if ('dataTransfer' in event) {
+      event.preventDefault();
+      file = event.dataTransfer.files[0];
+    } else if ('target' in event) {
+      file = event.target.files?.[0];
+    }
+
+    if (file) {
+      if (file.size / 1000 > 2000 || file.type !== 'application/pdf') {
+        setPrompt(fixPrompt('fail', 'Max Size : 2mb\n Accepted Format : PDF'));
+      } else {
+        const tag = 'bankPaymentSlip';
+        const id = 'Bank Payment Slip';
+        setBankPaymentSlip(file)
+        const mediaSetTemp = mediaSet.filter((media) => media.tag !== tag);
+        const newMedia = {
+          tag: tag,
+          id: id,
+          file: file
+        };
+        const updatedMediaSet = mediaSetTemp.concat(newMedia);
+        setMediaSet(updatedMediaSet);
+      }
+    }
   }
 
-  const handleMomoShotDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setMomoShot(event.dataTransfer.files[0])
+  const handleMomoShotDrop = (event: React.DragEvent<HTMLDivElement> | React.ChangeEvent<HTMLInputElement>) => {
+    let file: File | undefined;
+    if ('dataTransfer' in event) {
+      event.preventDefault();
+      file = event.dataTransfer.files[0];
+    } else if ('target' in event) {
+      file = event.target.files?.[0];
+    }
+
+    if (file) {
+      if (file.size / 1000 > 2000 || file.type !== 'application/pdf') {
+        setPrompt(fixPrompt('fail', 'Max Size : 2mb\n Accepted Format : PDF'));
+      } else {
+        const tag = 'momoShot';
+        const id = 'Mobile Money Screenshot';
+        setMomoShot(file)
+        const mediaSetTemp = mediaSet.filter((media) => media.tag !== tag);
+        const newMedia = {
+          tag: tag,
+          id: id,
+          file: file
+        };
+        const updatedMediaSet = mediaSetTemp.concat(newMedia);
+        setMediaSet(updatedMediaSet);
+      }
+    }
   }
 
   return (
@@ -212,12 +385,14 @@ const StudentVisa = () => {
       <section className={styles.formBox} id="horMargin">
         <section className={styles.left}>
           <header>
-            <strong>Dubai Visa</strong>
+            <strong>Dubai Visa {mediaSet.length}</strong>
           </header>
 
           <hr />
 
           <form onSubmit={(e) => { e.preventDefault(); handleFormNext(); }}>
+            <PromptBox />
+
             {formStep === 0 ?
               <>
                 <p>
@@ -280,7 +455,7 @@ const StudentVisa = () => {
                     >
                       <label className={styles.fileLabel}>
                         <legend> <span>Select Image Or Drop File Here</span> <IoCloudUploadOutline /> </legend>
-                        <input type="file" onChange={(e) => setPassportImageScanned(e.target.files![0])} />
+                        <input type="file" onChange={handlePassportImageScannedDrop} accept="application/pdf" />
                       </label>
                     </div>
 
@@ -299,7 +474,7 @@ const StudentVisa = () => {
                     >
                       <label className={styles.fileLabel}>
                         <legend> <span>Select Image Or Drop File Here</span> <IoCloudUploadOutline /> </legend>
-                        <input type="file" onChange={(e) => setPassportImageWhite(e.target.files![0])} />
+                        <input type="file" onChange={handlePassportImageWhiteDrop} accept="application/pdf" />
                       </label>
                     </div>
 
@@ -318,7 +493,7 @@ const StudentVisa = () => {
                     >
                       <label className={styles.fileLabel}>
                         <legend> <span>Select Image Or Drop File Here</span> <IoCloudUploadOutline /> </legend>
-                        <input type="file" onChange={(e) => setBankStatement(e.target.files![0])} />
+                        <input type="file" onChange={handleBankStatementDrop} accept="application/pdf" />
                       </label>
                     </div>
 
@@ -337,7 +512,7 @@ const StudentVisa = () => {
                     >
                       <label className={styles.fileLabel}>
                         <legend> <span>Select Image Or Drop File Here</span> <IoCloudUploadOutline /> </legend>
-                        <input type="file" onChange={(e) => setResidence(e.target.files![0])} />
+                        <input type="file" onChange={handleResidenceDrop} accept="application/pdf" />
                       </label>
                     </div>
 
@@ -403,7 +578,7 @@ const StudentVisa = () => {
                       >
                         <label className={styles.fileLabel}>
                           <legend> <span>Select Image Or Drop File Here</span> <IoCloudUploadOutline /> </legend>
-                          <input type="file" onChange={(e) => setBankPaymentSlip(e.target.files![0])} />
+                          <input type="file" onChange={handleBankPaymentSlipDrop} accept="application/pdf" />
                         </label>
                       </div>
 
@@ -422,7 +597,7 @@ const StudentVisa = () => {
                       >
                         <label className={styles.fileLabel}>
                           <legend> <span>Select Image Or Drop File Here</span> <IoCloudUploadOutline /> </legend>
-                          <input type="file" onChange={(e) => setMomoShot(e.target.files![0])} />
+                          <input type="file" onChange={handleMomoShotDrop} accept="application/pdf" />
                         </label>
                       </div>
 
@@ -437,9 +612,9 @@ const StudentVisa = () => {
                       <legend className={styles.nextTab} onClick={handleFormPrev}>Previous</legend>
 
                       {formLoading ?
-                        <button className={styles.nextTab}>Continue</button>
+                        <button className={styles.nextTab}>Submit</button>
                         :
-                        <button className={'miniLoader'}>Continue</button>
+                        <button className={'miniLoader'}>Submit</button>
                       }
                     </nav>
                   </>

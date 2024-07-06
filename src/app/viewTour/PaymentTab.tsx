@@ -5,6 +5,7 @@ import { FC, useState } from 'react';
 import { useUser } from '../contexts/userContext';
 import { createPayLink } from '../External/paystack';
 import { fireStoreDB } from '@/Firebase/base';
+import { convertToCedis } from '../External/currency';
 
 interface defType extends Record<string, any> { };
 type PaymentProps = {
@@ -19,7 +20,8 @@ const PaymentTab: FC<PaymentProps> = ({ tour }) => {
     if (user) {
       const stamp = new Date().getTime();
       const tid = `tid${stamp}`;
-      const payObj = await createPayLink(tour.price * 100, tid, email);
+      const convertedPrice = await convertToCedis(tour.price);
+      const payObj = await createPayLink(Number(convertedPrice) * 100, tid, email);
       await setDoc(doc(fireStoreDB, 'Trips/' + tid), {
         uid: user.uid,
         username: user.tourist.username,

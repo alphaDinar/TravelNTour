@@ -18,7 +18,8 @@ const Applications = async () => {
 
         <section className={styles.items}>
           {applications.map((el, i) => (
-            <Link href={''} className={styles.item} key={i}>
+            <Link href={{ pathname: '/manager/viewApplication', query: { application: JSON.stringify(el) } }}
+              className={styles.item} key={i}>
               <strong>{el.firstName} {el.secondName}</strong>
 
               <article>

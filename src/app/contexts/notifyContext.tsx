@@ -22,7 +22,7 @@ export const NotifyContextProvider = ({ children }: notifyContextProviderProps) 
   const [notify, setNotify] = useState<notify>({
     active: false,
     type: 'pass',
-    text: 'Room Created successfully'
+    text: ''
   });
 
   return (

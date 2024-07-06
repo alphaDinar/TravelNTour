@@ -8,7 +8,7 @@ import 'swiper/css/pagination';
 import { EffectFade, Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdEast, MdLocationPin, MdWest } from 'react-icons/md';
+import { MdEast, MdLocationPin, MdNorthEast, MdWest } from 'react-icons/md';
 import { CiCalendar, CiCalendarDate, CiLocationOn, CiSearch } from 'react-icons/ci';
 import { RiSearch2Line } from 'react-icons/ri';
 import { FC, useRef } from 'react';
@@ -51,10 +51,12 @@ const HeadBox: FC<HeadBoxProps> = ({ tours }) => {
         {sortByPriority(tours).map((tour, i) => (
           <SwiperSlide className={styles.slide} key={i}>
             <Image alt='' src={tour.image.url} fill className='cover' />
-            <Link href={{ pathname: '/viewTour', query: { tid: tour.id } }} className={styles.sheet}>
+            <section className={styles.sheet}>
               <span>- {tour.description}</span>
               <article>
-                <h3>{tour.id}</h3>
+                <Link href={{ pathname: '/viewTour', query: { tid: tour.id } }}>
+                  <h3>{tour.id} <MdNorthEast /></h3>
+                </Link>
                 <span>{getDaysLeft(tour.startDate)}</span>
               </article>
               <strong>{getRealDate(tour.startDate)} - {getRealDate(tour.endDate)}</strong>
@@ -62,7 +64,7 @@ const HeadBox: FC<HeadBoxProps> = ({ tours }) => {
                 <MdWest onClick={headSwiperPrev} />
                 <MdEast onClick={headSwiperNext} />
               </nav>
-            </Link>
+            </section>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -1,13 +1,12 @@
 import Image from 'next/image';
-import { FaRegHeart } from 'react-icons/fa';
-import { IoShareOutline } from 'react-icons/io5';
 import { LiaAwardSolid } from 'react-icons/lia';
-import { MdOutlineModeOfTravel, MdStarOutline, MdTaskAlt } from 'react-icons/md';
+import { MdClose, MdOutlineModeOfTravel, MdStarOutline, MdTaskAlt } from 'react-icons/md';
 import { RiHomeHeartLine } from 'react-icons/ri';
 import TopNav from '../components/TopNav/TopNav';
 import styles from '../viewTour/viewTour.module.css';
 import { categoryList } from '../External/assets';
 import { getDaysLeft, getRealDate } from '../External/time';
+import PriceTag from '../components/PriceTag/PriceTag';
 
 interface defType extends Record<string, any> { };
 const ViewTour = ({ searchParams }: { searchParams: { tour: string } }) => {
@@ -24,7 +23,11 @@ const ViewTour = ({ searchParams }: { searchParams: { tour: string } }) => {
           <h3>{tour.id}</h3>
 
           <p>
-            <legend>Booked <MdTaskAlt /> </legend>
+            {tour.payStatus ?
+              <legend style={{ background: 'var(--pass)' }}>Booked <MdTaskAlt /> </legend>
+              :
+              <legend style={{ background: 'tomato' }}>Unpaid <MdClose /> </legend>
+            }
           </p>
         </header>
 
@@ -123,7 +126,7 @@ const ViewTour = ({ searchParams }: { searchParams: { tour: string } }) => {
 
               <sub>{getDaysLeft(tour.startDate)}</sub>
               <hr />
-              <h3>GHS {tour.price.toLocaleString()}</h3>
+              <h3><PriceTag amount={tour.price} /></h3>
 
             </section>
           </section>

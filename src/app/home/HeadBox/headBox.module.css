@@ -30,9 +30,17 @@
   gap: 1.5rem;
   align-items: flex-end;
   justify-content: center;
+  z-index: 2000;
+}
+
+.sheet a {
+  color: whitesmoke;
 }
 
 .sheet h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
   font-size: 3.5rem;
   font-weight: bold;
 }

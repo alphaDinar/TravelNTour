@@ -128,3 +128,14 @@ export const targetList = [
 ]
 
 
+type currency = {
+  tag: string,
+  symbol: string,
+  img: string,
+}
+export const currencyList: currency[] = [
+  { tag: 'USD', symbol: '$', img: "https://res.cloudinary.com/dvnemzw0z/image/upload/v1720263225/travelntour/flag-Stars-and-Stripes-May-1-1795_sn1poq.webp" },
+  { tag: 'GBP', symbol: '£', img: "https://res.cloudinary.com/dvnemzw0z/image/upload/v1720263442/travelntour/20190917170935_Flag_of_the_United_Kingdom_1_lbjyla.jpg" },
+  { tag: 'EUR', symbol: '€', img: "https://res.cloudinary.com/dvnemzw0z/image/upload/v1720263582/travelntour/Flag_of_Europe.svg_cainlf.png" },
+  { tag: 'GHS', symbol: 'GHS', img: "https://res.cloudinary.com/dvnemzw0z/image/upload/v1720263725/travelntour/images_oheluv.png" }
+];

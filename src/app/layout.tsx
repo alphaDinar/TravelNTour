@@ -7,6 +7,9 @@ import { IsLoadingContextProvider } from "./contexts/isLoadingContext";
 import { NotifyContextProvider } from "./contexts/notifyContext";
 import { UserContextProvider } from "./contexts/userContext";
 import WhatsApp from "./components/WhatsApp/page";
+import { PromptContextProvider } from "./contexts/promptContext";
+import { CurrencyContextProvider } from "./contexts/currencyContext";
+import { ExchangeRateContextProvider } from "./contexts/exchangeRateContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +32,13 @@ export default function RootLayout({
             <IsLoadingContextProvider>
               <NotifyContextProvider>
                 <UserContextProvider>
-                  {children}
+                  <PromptContextProvider>
+                    <ExchangeRateContextProvider>
+                      <CurrencyContextProvider>
+                        {children}
+                      </CurrencyContextProvider>
+                    </ExchangeRateContextProvider>
+                  </PromptContextProvider>
                   <WhatsApp />
                 </UserContextProvider>
               </NotifyContextProvider>
