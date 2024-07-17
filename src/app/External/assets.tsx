@@ -2,7 +2,7 @@ import { MdOutlineDirectionsBoatFilled, MdOutlineForest } from 'react-icons/md';
 import { PiAirplaneInFlightLight } from 'react-icons/pi';
 import { IoBusOutline } from 'react-icons/io5';
 import { TbBeach } from 'react-icons/tb';
-import { GiOasis } from 'react-icons/gi';
+import { GiOasis, GiSelfLove } from 'react-icons/gi';
 import logoTemp from '../../../public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,7 +13,8 @@ export const logo = <Link href={'/'}> <Image alt='' src={logoTemp} width={70} he
 export const categoryList = [
   { tag: 'Beach Activity', iconEl: <TbBeach /> },
   { tag: 'Desert Trip', iconEl: <GiOasis /> },
-  { tag: 'Adventure Trip', iconEl: <MdOutlineForest /> }
+  { tag: 'Adventure Trip', iconEl: <MdOutlineForest /> },
+  { tag: 'Honeymoon', iconEl: <GiSelfLove /> }
 ]
 
 export const travelModeList = [
