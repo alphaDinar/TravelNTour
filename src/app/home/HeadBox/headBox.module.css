@@ -33,6 +33,11 @@
   z-index: 2000;
 }
 
+.sheet .description{
+  text-align: right;
+  max-width: 50%;
+}
+
 .sheet a {
   color: whitesmoke;
 }
@@ -130,6 +135,10 @@
 }
 
 @media all and (max-width:1100px) {
+  .sheet .description{
+    max-width: revert;
+    text-align: revert;
+  }
   .searchBox {
     position: revert;
     width: 100%;

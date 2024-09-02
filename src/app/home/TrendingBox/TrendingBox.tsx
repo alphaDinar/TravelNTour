@@ -65,7 +65,7 @@ const TrendingBox: FC<TrendingBoxProps> = ({ tours }) => {
               <div className={styles.top}>
                 <p>
                   <strong>{tour.id}</strong>
-                  <small>{tour.description}</small>
+                  <small id='cut2'>{tour.description}</small>
                 </p>
                 {/* <MdOutlineFavoriteBorder /> */}
               </div>

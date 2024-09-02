@@ -1,3 +1,4 @@
+'use client'
 import TopNav from "./components/TopNav/TopNav";
 import DestinationBox from "./home/DestinationBox/DestinationBox";
 import HeadBox from "./home/HeadBox/HeadBox";
@@ -9,13 +10,24 @@ import ContactBox from "./home/ContactBox/ContactBox";
 import PayBox from "./home/PayBox/PayBox";
 import FooterBox from "./components/FooterBox/FooterBox";
 import { fireStoreDB } from "@/Firebase/base";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { categoryList } from "./External/assets";
 import { collaboratorList, paymentMethodList } from "./External/lists";
+import { useEffect, useState } from "react";
 
-const Home = async () => {
-  // const categories = (await getDocs(collection(fireStoreDB, 'Categories/'))).docs.map((el) => ({ id: el.id, ...el.data() }));
-  const tours = (await getDocs(collection(fireStoreDB, 'Tours/'))).docs.map((el) => ({ id: el.id, ...el.data() }));
+
+interface defType extends Record<string, any> { };
+const Home = () => {
+  const [tours, setTours] = useState<defType[]>([]);
+
+  useEffect(() => {
+    const tourStream = onSnapshot(collection(fireStoreDB, 'Tours/'), (snapshot) => {
+      setTours(snapshot.docs.map((tour) => ({ id: tour.id, ...tour.data() })));
+      // setProductLoading(false);
+    });
+
+    return () => tourStream();
+  }, [])
 
   return (
     <main>

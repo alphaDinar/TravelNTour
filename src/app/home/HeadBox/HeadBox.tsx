@@ -8,8 +8,8 @@ import 'swiper/css/pagination';
 import { EffectFade, Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdEast, MdLocationPin, MdNorthEast, MdWest } from 'react-icons/md';
-import { CiCalendar, CiCalendarDate, CiLocationOn, CiSearch } from 'react-icons/ci';
+import { MdEast, MdNorthEast, MdWest } from 'react-icons/md';
+import { CiCalendarDate, CiLocationOn } from 'react-icons/ci';
 import { RiSearch2Line } from 'react-icons/ri';
 import { FC, useRef } from 'react';
 import { sortByPriority } from '@/app/External/sort';
@@ -41,10 +41,10 @@ const HeadBox: FC<HeadBoxProps> = ({ tours }) => {
         spaceBetween={30}
         effect={'fade'}
         loop
-        autoplay={{
-          delay: 3500,
-          disableOnInteraction: true,
-        }}
+        // autoplay={{
+        //   delay: 3500,
+        //   disableOnInteraction: true,
+        // }}
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
         className={styles.slideBox}
       >
@@ -52,7 +52,7 @@ const HeadBox: FC<HeadBoxProps> = ({ tours }) => {
           <SwiperSlide className={styles.slide} key={i}>
             <Image alt='' src={tour.image.url} fill className='cover' />
             <section className={styles.sheet}>
-              <span>- {tour.description}</span>
+              <span id='cut2' className={styles.description}>- {tour.description}</span>
               <article>
                 <Link href={{ pathname: '/viewTour', query: { tid: tour.id } }}>
                   <h3>{tour.id} <MdNorthEast /></h3>
