@@ -41,10 +41,10 @@ const HeadBox: FC<HeadBoxProps> = ({ tours }) => {
         spaceBetween={30}
         effect={'fade'}
         loop
-        // autoplay={{
-        //   delay: 3500,
-        //   disableOnInteraction: true,
-        // }}
+        autoplay={{
+          delay: 3500,
+          disableOnInteraction: true,
+        }}
         modules={[EffectFade, Autoplay, Pagination, Navigation]}
         className={styles.slideBox}
       >
