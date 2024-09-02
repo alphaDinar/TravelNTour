@@ -223,7 +223,7 @@ li {
     gap: 3vh;
   }
 
-  #hor,
+  /* #hor,
   #box {
     width: 95%;
     padding-right: 2.5%;
@@ -236,7 +236,7 @@ li {
   #titleBoxMargin {
     width: 95%;
     margin: auto;
-  }
+  } */
 }
 
 @media all and (max-width:500px) {
